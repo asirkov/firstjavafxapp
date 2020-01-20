@@ -1,4 +1,4 @@
-package javafxapp.tile.checker;
+package javafxapp.gamewindow.tile.checker;
 
 public enum CheckerType {
     BLACK(1), WHITE(-1);

@@ -1,14 +1,14 @@
-package javafxapp.tile.checker;
+package javafxapp.gamewindow.tile.checker;
 
 
 import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Ellipse;
-import javafxapp.config.CheckerConfig;
+import javafxapp.gamewindow.config.CheckerConfig;
 import lombok.Getter;
 import lombok.Setter;
 
-import static javafxapp.App.TILE_SIZE;
+import static javafxapp.gamewindow.GameWindow.TILE_SIZE;
 
 @Getter
 @Setter

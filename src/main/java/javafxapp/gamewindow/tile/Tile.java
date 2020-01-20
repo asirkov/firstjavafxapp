@@ -1,13 +1,13 @@
-package javafxapp.tile;
+package javafxapp.gamewindow.tile;
 
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
-import javafxapp.config.TileConfig;
-import javafxapp.tile.checker.Checker;
+import javafxapp.gamewindow.config.TileConfig;
+import javafxapp.gamewindow.tile.checker.Checker;
 import lombok.Getter;
 import lombok.Setter;
 
-import static javafxapp.App.TILE_SIZE;
+import static javafxapp.gamewindow.GameWindow.TILE_SIZE;
 
 
 @Getter

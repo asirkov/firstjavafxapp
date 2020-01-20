@@ -1,4 +1,4 @@
-package javafxapp.config;
+package javafxapp.gamewindow.config;
 
 import lombok.Getter;
 

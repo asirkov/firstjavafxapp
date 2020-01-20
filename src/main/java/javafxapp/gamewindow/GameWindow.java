@@ -1,21 +1,19 @@
-package javafxapp;
+package javafxapp.gamewindow;
 
 import javafx.application.Application;
 import javafx.scene.Group;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Label;
 import javafx.scene.layout.Pane;
-import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
-import javafxapp.tile.checker.Checker;
-import javafxapp.tile.checker.CheckerType;
-import javafxapp.tile.Tile;
-import javafxapp.tile.move.MoveResult;
-import javafxapp.tile.move.MoveType;
+import javafxapp.gamewindow.tile.checker.Checker;
+import javafxapp.gamewindow.tile.checker.CheckerType;
+import javafxapp.gamewindow.tile.Tile;
+import javafxapp.gamewindow.tile.move.MoveResult;
+import javafxapp.gamewindow.tile.move.MoveType;
 
 
-public class App extends Application {
+public class GameWindow extends Application {
     public static final int TILE_SIZE = 100;
     public static final int WIDTH = 8;
     public static final int HEIGHT = 8;

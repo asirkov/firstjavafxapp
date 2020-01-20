@@ -1,6 +1,6 @@
-package javafxapp.tile.move;
+package javafxapp.gamewindow.tile.move;
 
-import javafxapp.tile.checker.Checker;
+import javafxapp.gamewindow.tile.checker.Checker;
 import lombok.Getter;
 
 @Getter
