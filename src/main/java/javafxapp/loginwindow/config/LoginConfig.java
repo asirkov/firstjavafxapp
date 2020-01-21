@@ -4,6 +4,6 @@ import lombok.Getter;
 
 @Getter
 public class LoginConfig {
-    private final static String registrationUrl = "127.0.0.1:8080/registration";
+    public static final String REGISTRATION_URL = "http://127.0.0.1:8080/registration";
 
 }
