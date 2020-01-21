@@ -2,8 +2,8 @@ package javafxapp.gamewindow.tile;
 
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
-import javafxapp.gamewindow.config.TileConfig;
 import javafxapp.gamewindow.checker.Checker;
+import javafxapp.gamewindow.config.TileConfig;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -12,7 +12,6 @@ import static javafxapp.gamewindow.GameWindow.TILE_SIZE;
 @Getter
 @Setter
 public class Tile extends Rectangle {
-    private final TileConfig tileConfig = new TileConfig();
     private Checker checker;
 
     public boolean hasChecker() {
@@ -25,7 +24,7 @@ public class Tile extends Rectangle {
 
         this.relocate(x * TILE_SIZE, y * TILE_SIZE);
         this.setFill(light ?
-                Color.valueOf(tileConfig.getWHITE_TILE_COLOR()) :
-                Color.valueOf(tileConfig.getBLACK_TILE_COLOR()));
+                Color.valueOf(TileConfig.WHITE_TILE_COLOR) :
+                Color.valueOf(TileConfig.BLACK_TILE_COLOR));
     }
 }
