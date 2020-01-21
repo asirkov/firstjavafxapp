@@ -3,12 +3,11 @@ package javafxapp.gamewindow.tile;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import javafxapp.gamewindow.config.TileConfig;
-import javafxapp.gamewindow.tile.checker.Checker;
+import javafxapp.gamewindow.checker.Checker;
 import lombok.Getter;
 import lombok.Setter;
 
 import static javafxapp.gamewindow.GameWindow.TILE_SIZE;
-
 
 @Getter
 @Setter

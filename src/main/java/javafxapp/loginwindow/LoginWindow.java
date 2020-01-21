@@ -1,6 +1,7 @@
 package javafxapp.loginwindow;
 
 import javafx.application.Application;
+import javafx.geometry.Insets;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -16,6 +17,7 @@ import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
+
 public class LoginWindow extends Application {
     private String user = "admin";
     private String pw = "admin";
@@ -23,19 +25,15 @@ public class LoginWindow extends Application {
     private String checkUser;
     private String checkPw;
 
-
-    @Override
-    public void start(Stage primaryStage) throws Exception {
-        primaryStage.setTitle("Login");
-
+    private BorderPane createLoginPanel() {
         BorderPane bp = new BorderPane();
-        //bp.setPadding(new Insets(10, 50, 50, 50));
+        bp.setPadding(new Insets(10, 50, 50, 50));
 
         HBox hb = new HBox();
-        //
+        hb.setPadding(new Insets(20, 20, 20, 30));
 
         GridPane gp = new GridPane();
-        //
+        gp.setPadding(new Insets(20, 20, 20, 20));
         gp.setHgap(5);
         gp.setVgap(5);
 
@@ -45,7 +43,7 @@ public class LoginWindow extends Application {
         final TextField txtPassWord = new PasswordField();
 
         Button btnLogin = new Button("Login");
-        final Label lblMessage = new Label();
+        Label lblMessage = new Label();
 
         gp.add(lblUserName, 0, 0);
         gp.add(txtUserName, 1, 0);
@@ -80,11 +78,21 @@ public class LoginWindow extends Application {
         bp.setTop(hb);
         bp.setCenter(gp);
 
+        return bp;
+    }
 
-        Scene scene = new Scene(bp);
-        primaryStage.setScene(scene);
+    @Override
+    public void start(Stage primaryStage) throws Exception {
+        primaryStage.setTitle("Login");
+
+        BorderPane bp = createLoginPanel();
+
+//        Scene scene = new Scene(bp);
+
+        primaryStage.setScene(new Scene(bp));
         primaryStage.setResizable(false);
-
+        primaryStage.setWidth(600);
+        primaryStage.setHeight(600);
         primaryStage.show();
     }
 

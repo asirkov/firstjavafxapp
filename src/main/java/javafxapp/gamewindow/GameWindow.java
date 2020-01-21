@@ -6,15 +6,14 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
-import javafxapp.gamewindow.tile.checker.Checker;
-import javafxapp.gamewindow.tile.checker.CheckerType;
+import javafxapp.gamewindow.checker.Checker;
+import javafxapp.gamewindow.checker.CheckerType;
 import javafxapp.gamewindow.tile.Tile;
-import javafxapp.gamewindow.tile.move.MoveResult;
-import javafxapp.gamewindow.tile.move.MoveType;
-
+import javafxapp.gamewindow.move.MoveResult;
+import javafxapp.gamewindow.move.MoveType;
 
 public class GameWindow extends Application {
-    public static final int TILE_SIZE = 100;
+    public static final int TILE_SIZE = 50;
     public static final int WIDTH = 8;
     public static final int HEIGHT = 8;
 

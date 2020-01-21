@@ -1,4 +1,4 @@
-package javafxapp.gamewindow.tile.checker;
+package javafxapp.gamewindow.checker;
 
 
 import javafx.scene.layout.StackPane;

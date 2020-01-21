@@ -1,4 +1,4 @@
-package javafxapp.gamewindow.tile.move;
+package javafxapp.gamewindow.move;
 
 public enum MoveType {
     NONE, MOVE, KILL
