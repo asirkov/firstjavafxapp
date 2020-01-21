@@ -13,7 +13,7 @@ import javafxapp.gamewindow.move.MoveResult;
 import javafxapp.gamewindow.move.MoveType;
 
 public class GameWindow extends Application {
-    public static final int TILE_SIZE = 50;
+    public static final int TILE_SIZE = 80;
     public static final int WIDTH = 8;
     public static final int HEIGHT = 8;
 
@@ -106,16 +106,20 @@ public class GameWindow extends Application {
         int x0 = toBoardCoords(checker.getOldX());
         int y0 = toBoardCoords(checker.getOldY());
 
-        // TODO: Make queen check
-        if (Math.abs(newX - x0) == 1 && newY - y0 == checker.getCheckerType().moveDirection) {
-            return new MoveResult(MoveType.MOVE);
-        } else if (Math.abs(newX - x0) == 2 && newY - y0 == checker.getCheckerType().moveDirection * 2) {
-            int x1 = x0 - (newX - x0) / 2;
-            int y1 = y0 = (newY - y0) / 2;
+        try {
+            // TODO: Make queen check
+            if (Math.abs(newX - x0) == 1 && newY - y0 == checker.getCheckerType().moveDirection) {
+                return new MoveResult(MoveType.MOVE);
+            } else if (Math.abs(newX - x0) == 2 && newY - y0 == checker.getCheckerType().moveDirection * 2) {
+                int x1 = x0 - (newX - x0) / 2;
+                int y1 = y0 = (newY - y0) / 2;
 
-            if (board[x1][y1].hasChecker() && board[x1][y1].getChecker().getCheckerType() != checker.getCheckerType()) {
-                return new MoveResult(MoveType.KILL, board[x1][y1].getChecker());
+                if (board[x1][y1].hasChecker() && board[x1][y1].getChecker().getCheckerType() != checker.getCheckerType()) {
+                    return new MoveResult(MoveType.KILL, board[x1][y1].getChecker());
+                }
             }
+        } catch (Exception ex) {
+            return new MoveResult(MoveType.NONE);
         }
 
         return new MoveResult(MoveType.NONE);

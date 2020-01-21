@@ -7,7 +7,6 @@ import javafx.geometry.Pos;
 import javafx.scene.Cursor;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
-import javafx.scene.effect.MotionBlur;
 import javafx.scene.effect.Reflection;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
@@ -96,7 +95,7 @@ public class LoginWindow extends Application {
 //        primaryStage.show();
 //    }
 
-    private GridPane createRegistrationFormPane() {
+    private GridPane createLoginWindowPane() {
         GridPane gp = new GridPane();
         gp.setAlignment(Pos.CENTER);
         gp.setPadding(new Insets(40));
@@ -181,7 +180,7 @@ public class LoginWindow extends Application {
     public void start(Stage primaryStage) {
         primaryStage.setTitle("Login Form JavaFX Application");
 
-        GridPane gp = createRegistrationFormPane();
+        GridPane gp = createLoginWindowPane();
         Scene scene = new Scene(gp, 800, 480);
 
         primaryStage.setScene(scene);
