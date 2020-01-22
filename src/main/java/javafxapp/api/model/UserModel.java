@@ -6,7 +6,7 @@ import lombok.Data;
 
 @Data
 @JsonIgnoreProperties(ignoreUnknown = true)
-public class User {
+public class UserModel {
     @JsonProperty("id")
     private final Long id;
 
