@@ -1,6 +1,6 @@
 package javafxapp.api.model;
 
-enum GameResultType {
+public enum GameResultType {
     DRAW("DRAW"), WHITE_WINS("WHITE_WINS"), BLACK_WINS("BLACK_WINS");
 
     private String gameResult;

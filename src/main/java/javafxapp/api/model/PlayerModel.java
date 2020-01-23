@@ -22,6 +22,11 @@ public class PlayerModel {
     @JsonProperty("rate")
     private final Double rate;
 
+    @JsonProperty("online")
+    private final Boolean online;
+
 //    @JsonProperty("avatar_id")
 //    private final Integer avatarId;
+
+
 }

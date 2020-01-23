@@ -17,15 +17,14 @@ public class GameModel {
 
     // WHITE
     @JsonProperty("participant_1_id")
-    private final Long participant1Id;
-
     private final PlayerModel participant1;
+//    private final Long participant1Id;
 
     // BLACK
     @JsonProperty("participant_2_id")
-    private final Long participant2Id;
-
     private final PlayerModel participant2;
+    //private final Long participant2Id;
+
 
     @JsonProperty("game_result")
     private final GameResultType gameResultType;
