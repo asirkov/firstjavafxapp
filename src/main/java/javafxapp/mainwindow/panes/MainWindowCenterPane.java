@@ -6,11 +6,13 @@ import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
+import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontPosture;
 import javafx.scene.text.FontWeight;
 import javafxapp.api.model.GameModel;
+import javafxapp.api.model.PlayerModel;
 import javafxapp.mainwindow.separators.HSeparator;
 import javafxapp.mainwindow.separators.VSeparator;
 import javafxapp.mainwindow.views.GameMinInfoView;
@@ -20,7 +22,7 @@ import java.util.List;
 
 public class MainWindowCenterPane extends HBox {
 
-    private ScrollPane createMainWindowGameList(List<GameModel> gamesList, double width, double height) {
+    private ScrollPane createMainWindowGameList(PlayerModel player, List<GameModel> gamesList, double width, double height) {
         VBox vb = new VBox();
         vb.setPadding(new Insets(0));
         vb.setSpacing(5);
@@ -29,39 +31,48 @@ public class MainWindowCenterPane extends HBox {
         sp.setPadding(new Insets(0));
         sp.setContent(vb);
 
-        gamesList.forEach(gameModel -> vb.getChildren().add(new GameMinInfoView(gameModel, width) ));
+        gamesList.forEach(gameModel -> {
+            GameMinInfoView view = new GameMinInfoView(player, gameModel, width);
+            vb.getChildren().add(view);
+            VBox.setVgrow(view, Priority.ALWAYS);
+        });
 
-        sp.setMinSize(width, height);
-        sp.setMaxSize(width, height);
+//        sp.setMinSize(width, height);
+//        sp.setMaxSize(width, height);
+
 
         sp.setHbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
         sp.setVbarPolicy(ScrollPane.ScrollBarPolicy.ALWAYS);
+        sp.setFitToWidth(true);
 
         return sp;
     }
 
-    public MainWindowCenterPane(List<GameModel> gamesList, double width, double height) {
+    public MainWindowCenterPane(PlayerModel player, List<GameModel> gamesList, double width, double height) {
         super();
         this.setPadding(new Insets(0));
         this.setAlignment(Pos.TOP_CENTER);
+        this.setFillHeight(true);
         this.setSpacing(0);
-
-        Label lblGamesHeader = new BigLabel("Games: ", width, height * 0.07d);
-        ScrollPane sp = createMainWindowGameList(gamesList, width, height * 0.93d  - VSeparator.SEPARATOR_HEIGHT);
 
         VBox vb = new VBox();
         vb.setPadding(new Insets(0));
         vb.setAlignment(Pos.TOP_CENTER);
 
+        VSeparator separator = new VSeparator(width);
+
         vb.getChildren().addAll(
-                lblGamesHeader,
+                new BigLabel("Games: ", width, height * 0.07d),
                 new VSeparator(width),
-                sp
-        );
+                createMainWindowGameList(player, gamesList, width, height * 0.93d  - VSeparator.SEPARATOR_HEIGHT));
 
-        this.getChildren().addAll(new HSeparator(height), vb, new HSeparator(height));
+        vb.getChildren().forEach(c -> VBox.setVgrow(c, Priority.ALWAYS));
 
-        this.setMinWidth(width);
-        this.setMaxWidth(width);
+        this.getChildren().addAll(
+                new HSeparator(height),
+                vb,
+                new HSeparator(height));
+
+        this.getChildren().forEach(c -> HBox.setHgrow(c, Priority.ALWAYS));
     }
 }

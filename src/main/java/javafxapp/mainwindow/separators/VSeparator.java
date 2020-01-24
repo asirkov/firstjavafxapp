@@ -13,6 +13,6 @@ public class VSeparator extends Separator {
         this.setPadding(new Insets(SEPARATOR_HEIGHT/2, 0, SEPARATOR_HEIGHT/2, 0));
 
         this.setMinWidth(width);
-        this.setMaxWidth(this.getMinWidth());
+//        this.setMaxWidth(this.getMinWidth());
     }
 }

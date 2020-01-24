@@ -3,6 +3,7 @@ package javafxapp.mainwindow.panes;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.Label;
+import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
 import javafxapp.api.model.PlayerModel;
 import javafxapp.mainwindow.separators.VSeparator;
@@ -21,16 +22,13 @@ public class MainWindowLeftPane extends VBox {
         this.setSpacing(0);
 
         Label lblProfileHeader = new BigLabel("Profile: ", width, height * 0.07d);
-        //lblProfileHeader.setPadding(new Insets(0, 0, 0, 10));
-
         this.getChildren().addAll(
                 lblProfileHeader,
                 new VSeparator(width),
                 new PlayerMaxInfoView(player, width),
                 new VSeparator(width));
 
-        this.setMinSize(width, height);
-        this.setMaxSize(width, height);
+        this.getChildren().forEach(c -> VBox.setVgrow(c, Priority.ALWAYS));
     }
 
 

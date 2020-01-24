@@ -92,21 +92,33 @@ public class MainWindow extends Application {
 
 
         List<GameModel> gameModelList = List.of(
-            new GameModel(1L, Date.from(Instant.now()), participant1, participant2, GameResultType.BLACK_WINS),
-            new GameModel(2L, Date.from(Instant.now()), participant3, participant4, GameResultType.WHITE_WINS),
-            new GameModel(3L, Date.from(Instant.now()), participant5, participant6, GameResultType.DRAW),
-            new GameModel(4L, Date.from(Instant.now()), participant1, participant2, GameResultType.BLACK_WINS),
-            new GameModel(5L, Date.from(Instant.now()), participant3, participant4, GameResultType.DRAW),
-            new GameModel(6L, Date.from(Instant.now()), participant5, participant6, GameResultType.WHITE_WINS),
-            new GameModel(7L, Date.from(Instant.now()), participant1, participant2, GameResultType.WHITE_WINS),
-            new GameModel(8L, Date.from(Instant.now()), participant3, participant4, GameResultType.WHITE_WINS),
-            new GameModel(9L, Date.from(Instant.now()), participant5, participant6, GameResultType.BLACK_WINS),
-            new GameModel(10L, Date.from(Instant.now()), participant1, participant2, GameResultType.DRAW),
-            new GameModel(11L, Date.from(Instant.now()), participant3, participant4, GameResultType.WHITE_WINS),
-            new GameModel(12L, Date.from(Instant.now()), participant5, participant6, GameResultType.WHITE_WINS)
+            new GameModel(1L, Date.from(Instant.now()), player, participant2, GameResultType.BLACK_WINS),
+            new GameModel(2L, Date.from(Instant.now()), participant3, player, GameResultType.WHITE_WINS),
+            new GameModel(3L, Date.from(Instant.now()), participant5, player, GameResultType.DRAW),
+            new GameModel(4L, Date.from(Instant.now()), participant1, player, GameResultType.BLACK_WINS),
+            new GameModel(5L, Date.from(Instant.now()), player, participant4, GameResultType.DRAW),
+            new GameModel(6L, Date.from(Instant.now()), participant5, player, GameResultType.WHITE_WINS),
+            new GameModel(7L, Date.from(Instant.now()), participant1, player, GameResultType.WHITE_WINS),
+            new GameModel(8L, Date.from(Instant.now()), participant3, player, GameResultType.WHITE_WINS),
+            new GameModel(9L, Date.from(Instant.now()), player, participant6, GameResultType.BLACK_WINS),
+            new GameModel(10L, Date.from(Instant.now()), player, participant2, GameResultType.DRAW),
+            new GameModel(11L, Date.from(Instant.now()), player, participant4, GameResultType.WHITE_WINS),
+            new GameModel(12L, Date.from(Instant.now()), player, participant4, GameResultType.WHITE_WINS),
+            new GameModel(13L, Date.from(Instant.now()), player, participant2, GameResultType.DRAW),
+            new GameModel(14L, Date.from(Instant.now()), player, participant6, GameResultType.BLACK_WINS),
+            new GameModel(15L, Date.from(Instant.now()), participant5, player, GameResultType.BLACK_WINS),
+            new GameModel(16L, Date.from(Instant.now()), participant1, player, GameResultType.BLACK_WINS),
+            new GameModel(17L, Date.from(Instant.now()), player, participant4, GameResultType.DRAW),
+            new GameModel(18L, Date.from(Instant.now()), participant5, player, GameResultType.WHITE_WINS),
+            new GameModel(19L, Date.from(Instant.now()), participant1, player, GameResultType.WHITE_WINS),
+            new GameModel(20L, Date.from(Instant.now()), participant3, player, GameResultType.WHITE_WINS),
+            new GameModel(21L, Date.from(Instant.now()), player, participant6, GameResultType.BLACK_WINS),
+            new GameModel(22L, Date.from(Instant.now()), player, participant2, GameResultType.DRAW),
+            new GameModel(23L, Date.from(Instant.now()), player, participant4, GameResultType.WHITE_WINS),
+            new GameModel(24L, Date.from(Instant.now()), player, participant6, GameResultType.WHITE_WINS)
         );
 
-        MainWindowCenterPane centerPane = new MainWindowCenterPane(gameModelList, (width * 0.4d) - 20, (height));
+        MainWindowCenterPane centerPane = new MainWindowCenterPane(player, gameModelList, (width * 0.4d) - 20, (height));
 
         List<PlayerModel> onlineList = List.of(
                 participant1,
@@ -132,6 +144,8 @@ public class MainWindow extends Application {
 
         Scene scene = new Scene(bp, MainWindowConfig.WINDOW_WIDTH, MainWindowConfig.WINDOW_HEIGHT, Color.TRANSPARENT);
         primaryStage.setScene(scene);
+        primaryStage.setMinWidth(MainWindowConfig.WINDOW_WIDTH);
+        primaryStage.setMinHeight(MainWindowConfig.WINDOW_HEIGHT);
 //        primaryStage.setResizable(false);
 
         primaryStage.show();
