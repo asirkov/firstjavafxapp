@@ -21,7 +21,7 @@ public class MainWindowLeftPane extends VBox {
         this.setAlignment(Pos.TOP_CENTER);
         this.setSpacing(0);
 
-        Label lblProfileHeader = new BigLabel("Profile: ", width, height * 0.07d);
+        Label lblProfileHeader = new BigLabel("Profile: ", width);
         this.getChildren().addAll(
                 lblProfileHeader,
                 new VSeparator(width),

@@ -2,13 +2,17 @@ package javafxapp.mainwindow.panes;
 
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
-import javafx.scene.control.Label;
-import javafx.scene.control.ScrollPane;
+import javafx.scene.control.*;
+import javafx.scene.layout.HBox;
+import javafx.scene.layout.Pane;
+import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontPosture;
 import javafx.scene.text.FontWeight;
 import javafxapp.api.model.PlayerModel;
+import javafxapp.mainwindow.config.MainWindowConfig;
+import javafxapp.mainwindow.separators.HSeparator;
 import javafxapp.mainwindow.separators.VSeparator;
 import javafxapp.mainwindow.views.PlayerMinInfoView;
 import javafxapp.mainwindow.labels.*;
@@ -25,7 +29,15 @@ public class MainWindowRightPane extends VBox {
             new PlayerModel(17L, 17L, "<aa>", 1229L, 0.68d, true),
             new PlayerModel(18L, 18L, "no!help", 99L, 0.41d, true),
             new PlayerModel(19L, 19L, "xexexexe", 267L, 0.16d, true),
-            new PlayerModel(20L, 20L, "OHNOOOOOO", 109L, 0.34d, true)
+            new PlayerModel(20L, 20L, "OHNOOOOOO", 109L, 0.34d, true),
+            new PlayerModel(21L, 13L, "<aaaaa>", 1229L, 0.68d, true),
+            new PlayerModel(22L, 14L, "no!checrs", 929L, 0.4d, true),
+            new PlayerModel(23L, 15L, "prafessiOnal", 297L, 0.56d, true),
+            new PlayerModel(24L, 16L, "Yoyo", 129L, 0.64d, true),
+            new PlayerModel(25L, 17L, "<aa>", 1229L, 0.68d, true),
+            new PlayerModel(26L, 18L, "no!help", 99L, 0.41d, true),
+            new PlayerModel(27L, 19L, "xexexexe", 267L, 0.16d, true),
+            new PlayerModel(28L, 20L, "OHNOOOOOO", 109L, 0.34d, true)
             );
 
     private List<PlayerModel> friendsList = List.of(
@@ -44,13 +56,18 @@ public class MainWindowRightPane extends VBox {
         sp.setPadding(new Insets(0));
         sp.setContent(vb);
 
-        playersList.forEach(playerModel -> vb.getChildren().add(new PlayerMinInfoView(playerModel, width - 6) ));
+        playersList.forEach(player -> {
+            PlayerMinInfoView view = new PlayerMinInfoView(player, width);
+            vb.getChildren().add(view);
+            VBox.setVgrow(view, Priority.ALWAYS);
+        });
 
-        sp.setMinSize(width, height);
-        sp.setMaxSize(width, height);
+        sp.setMinHeight(height);
+//        sp.setMaxSize(width, height);
 
         sp.setHbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
         sp.setVbarPolicy(ScrollPane.ScrollBarPolicy.ALWAYS);
+        sp.setFitToWidth(true);
 
         return sp;
     }
@@ -61,25 +78,34 @@ public class MainWindowRightPane extends VBox {
         this.setAlignment(Pos.TOP_CENTER);
         this.setSpacing(0);
 
-        Label lblOnlineHeader = new BigLabel("Online: " + onlineList.size(), width, (height * 0.07d));
-        ScrollPane spOnline = createPlayersList(onlineList, width, (height * 0.93d / 2) - VSeparator.SEPARATOR_HEIGHT * 2);
+        TabPane tabPane = new TabPane();
+        VBox.setVgrow(tabPane, Priority.ALWAYS);
 
 
-        Label lblFriendsHeader = new BigLabel("Friends: " + friendsList.size(), width, (height * 0.07d));
-        ScrollPane spFriends = createPlayersList(friendsList, width, (height * 0.93d / 2) - VSeparator.SEPARATOR_HEIGHT * 2);
+        Tab tabOnline = new Tab("Online");
+        tabOnline.setClosable(false);
+        Tab tabFriends = new Tab("Friends");
+        tabFriends.setClosable(false);
 
-        this.getChildren().addAll(
-                lblOnlineHeader,
-                new VSeparator(width),
-                spOnline,
-                new VSeparator(width),
-                lblFriendsHeader,
-                new VSeparator(width),
-                spFriends
-        );
 
-        this.setMinWidth(width);
-        this.setMaxWidth(width);
+        Label lblOnlineHeader = new BigLabel("Online: " + onlineList.size(), width / 2);
+        ScrollPane spOnline = createPlayersList(onlineList, width, (height - MainWindowConfig.HEADER_HEIGHT * 2) - VSeparator.SEPARATOR_HEIGHT);
+        VBox.setVgrow(lblOnlineHeader, Priority.NEVER);
+        VBox.setVgrow(spOnline, Priority.ALWAYS);
+        tabOnline.setContent(new VBox(lblOnlineHeader, new VSeparator(width), spOnline));
+
+        Label lblFriendsHeader = new BigLabel("Friends: " + friendsList.size(), width / 2);
+        ScrollPane spFriends = createPlayersList(friendsList, width, (height - MainWindowConfig.HEADER_HEIGHT * 2) - VSeparator.SEPARATOR_HEIGHT);
+        VBox.setVgrow(lblFriendsHeader, Priority.NEVER);
+        VBox.setVgrow(spFriends, Priority.ALWAYS);
+        tabFriends.setContent(new VBox(lblFriendsHeader, new VSeparator(width), spFriends));
+
+        tabPane.getTabs().addAll(tabOnline, tabFriends);
+
+        this.getChildren().add(tabPane);
+
+//        this.setMinWidth(width);
+//        this.setMaxWidth(width);
     }
 
     public void update() {}

@@ -63,8 +63,7 @@ public class MainWindow extends Application {
 
         mb.getMenus().addAll(mProfileMenu, mAboutMenu);
 
-        mb.setMinHeight(20);
-        mb.setMaxHeight(20);
+        mb.setMinHeight(MainWindowConfig.HEADER_HEIGHT);
 
         return mb;
     }
@@ -80,7 +79,7 @@ public class MainWindow extends Application {
 
         PlayerModel player = new PlayerModel(1L, 1L, "Developer", 9999L, 0.99d, true);
 
-        MainWindowLeftPane leftPane = new MainWindowLeftPane(player, (width * 0.2d) - 20, (height));
+        MainWindowLeftPane leftPane = new MainWindowLeftPane(player, (width * 0.2d) - 30, (height));
 
 
         PlayerModel participant1 = new PlayerModel(1L, 1L, "Joaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaara", 129L, 0.64d, false);
@@ -118,7 +117,7 @@ public class MainWindow extends Application {
             new GameModel(24L, Date.from(Instant.now()), player, participant6, GameResultType.WHITE_WINS)
         );
 
-        MainWindowCenterPane centerPane = new MainWindowCenterPane(player, gameModelList, (width * 0.4d) - 20, (height));
+        MainWindowCenterPane centerPane = new MainWindowCenterPane(player, gameModelList, (width * 0.4d) - 30, (height));
 
         List<PlayerModel> onlineList = List.of(
                 participant1,
@@ -131,7 +130,7 @@ public class MainWindow extends Application {
                 .stream()
                 .filter(PlayerModel::getOnline).collect(Collectors.toList());
 
-        MainWindowRightPane rightPane = new MainWindowRightPane(player, onlineList, (width * 0.4d) - 20, (height));
+        MainWindowRightPane rightPane = new MainWindowRightPane(player, onlineList, (width * 0.4d) - 30, (height));
 
 
         bp.setCenter(centerPane);
@@ -146,7 +145,7 @@ public class MainWindow extends Application {
         primaryStage.setScene(scene);
         primaryStage.setMinWidth(MainWindowConfig.WINDOW_WIDTH);
         primaryStage.setMinHeight(MainWindowConfig.WINDOW_HEIGHT);
-//        primaryStage.setResizable(false);
+        primaryStage.setResizable(false);
 
         primaryStage.show();
     }

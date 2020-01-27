@@ -62,7 +62,7 @@ public class MainWindowCenterPane extends HBox {
         VSeparator separator = new VSeparator(width);
 
         vb.getChildren().addAll(
-                new BigLabel("Games: ", width, height * 0.07d),
+                new BigLabel("Games: ", width),
                 new VSeparator(width),
                 createMainWindowGameList(player, gamesList, width, height * 0.93d  - VSeparator.SEPARATOR_HEIGHT));
 
