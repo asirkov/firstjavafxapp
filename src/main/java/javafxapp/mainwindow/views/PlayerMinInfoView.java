@@ -6,11 +6,9 @@ import javafx.scene.Cursor;
 import javafx.scene.control.Label;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
-import javafx.scene.text.Font;
-import javafx.scene.text.FontWeight;
 import javafxapp.api.model.PlayerModel;
 import javafxapp.mainwindow.views.icons.PlayerOnlineIcon;
-import javafxapp.mainwindow.labels.*;
+import javafxapp.labels.*;
 
 public class PlayerMinInfoView extends HBox {
     public PlayerMinInfoView(PlayerModel playerModel, double width) {

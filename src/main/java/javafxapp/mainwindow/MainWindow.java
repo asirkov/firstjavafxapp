@@ -10,15 +10,18 @@ import javafx.scene.input.KeyCombination;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.Paint;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafxapp.api.model.GameModel;
 import javafxapp.api.model.GameResultType;
 import javafxapp.api.model.PlayerModel;
+import javafxapp.config.Config;
 import javafxapp.mainwindow.config.MainWindowConfig;
 import javafxapp.mainwindow.panes.MainWindowCenterPane;
 import javafxapp.mainwindow.panes.MainWindowLeftPane;
 import javafxapp.mainwindow.panes.MainWindowRightPane;
 import javafxapp.mainwindow.separators.HSeparator;
+import javafxapp.settingswindow.SettingsWindow;
 
 import java.sql.Date;
 import java.time.Instant;
@@ -39,7 +42,7 @@ public class MainWindow extends Application {
         return bp;
     }
 
-    MenuBar createMenuBar(/*Parent parent*/) {
+    MenuBar createMenuBar(Stage primaryStage /*, Parent parent*/) {
         MenuBar mb = new MenuBar();
 
         Menu mProfileMenu = new Menu("Profile");
@@ -48,8 +51,19 @@ public class MainWindow extends Application {
 //        });
 
         MenuItem profileMenuSettings = new MenuItem("Settings");
-//        profileMenuSettings.setOnAction(e -> {
-//        });
+        profileMenuSettings.setOnAction(e -> {
+            Scene settingsScene = new Scene(new SettingsWindow(400, 400));
+
+            Stage settingsWindow = new Stage();
+            settingsWindow.setTitle("Settings");
+            settingsWindow.setScene(settingsScene);
+            settingsWindow.setResizable(false);
+
+            settingsWindow.initModality(Modality.WINDOW_MODAL);
+            settingsWindow.initOwner(primaryStage);
+
+            settingsWindow.show();
+        });
         profileMenuSettings.setAccelerator(KeyCombination.keyCombination("Ctrl+P"));
 
         MenuItem profileMenuLogOut = new MenuItem("Log out");
@@ -70,10 +84,10 @@ public class MainWindow extends Application {
 
     @Override
     public void start(Stage primaryStage) {
-        MenuBar mb = createMenuBar();
+        MenuBar mb = createMenuBar(primaryStage);
 
-        double width = MainWindowConfig.WINDOW_WIDTH;
-        double height = MainWindowConfig.WINDOW_HEIGHT - mb.getMaxHeight();
+        double width = Config.WINDOW_WIDTH;
+        double height = Config.WINDOW_HEIGHT - mb.getMaxHeight();
 
         BorderPane bp = createMainWindowPanes(width, height);
 
@@ -141,10 +155,10 @@ public class MainWindow extends Application {
         bp.setBottom(new Pane());
 
 
-        Scene scene = new Scene(bp, MainWindowConfig.WINDOW_WIDTH, MainWindowConfig.WINDOW_HEIGHT, Color.TRANSPARENT);
+        Scene scene = new Scene(bp, Config.WINDOW_WIDTH, Config.WINDOW_HEIGHT, Color.TRANSPARENT);
         primaryStage.setScene(scene);
-        primaryStage.setMinWidth(MainWindowConfig.WINDOW_WIDTH);
-        primaryStage.setMinHeight(MainWindowConfig.WINDOW_HEIGHT);
+        primaryStage.setMinWidth(Config.WINDOW_WIDTH);
+        primaryStage.setMinHeight(Config.WINDOW_HEIGHT);
         primaryStage.setResizable(false);
 
         primaryStage.show();

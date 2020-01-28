@@ -3,19 +3,13 @@ package javafxapp.mainwindow.panes;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.*;
-import javafx.scene.layout.HBox;
-import javafx.scene.layout.Pane;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
-import javafx.scene.text.Font;
-import javafx.scene.text.FontPosture;
-import javafx.scene.text.FontWeight;
 import javafxapp.api.model.PlayerModel;
 import javafxapp.mainwindow.config.MainWindowConfig;
-import javafxapp.mainwindow.separators.HSeparator;
 import javafxapp.mainwindow.separators.VSeparator;
 import javafxapp.mainwindow.views.PlayerMinInfoView;
-import javafxapp.mainwindow.labels.*;
+import javafxapp.labels.*;
 
 import java.util.List;
 

@@ -8,7 +8,7 @@ import javafx.scene.layout.VBox;
 import javafxapp.api.model.PlayerModel;
 import javafxapp.mainwindow.separators.VSeparator;
 import javafxapp.mainwindow.views.PlayerMaxInfoView;
-import javafxapp.mainwindow.labels.*;
+import javafxapp.labels.*;
 
 public class MainWindowLeftPane extends VBox {
 

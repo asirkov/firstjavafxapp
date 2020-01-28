@@ -1,11 +1,10 @@
-package javafxapp.mainwindow.labels;
+package javafxapp.labels;
 
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.Label;
 import javafx.scene.paint.Paint;
 import javafx.scene.text.Font;
-import javafx.scene.text.FontPosture;
 import javafx.scene.text.FontWeight;
 
 public class SmallLabel extends Label {

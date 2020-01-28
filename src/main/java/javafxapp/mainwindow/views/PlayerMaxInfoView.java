@@ -1,6 +1,5 @@
 package javafxapp.mainwindow.views;
 
-import javafx.geometry.Insets;
 import javafx.scene.control.Label;
 import javafx.scene.control.Tooltip;
 import javafx.scene.image.Image;
@@ -8,14 +7,12 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Paint;
 import javafx.scene.text.Font;
-import javafx.scene.text.FontPosture;
 import javafx.scene.text.FontWeight;
-import javafx.scene.text.TextAlignment;
 import javafx.util.Duration;
 
 import javafxapp.api.model.PlayerModel;
 import javafxapp.mainwindow.config.MainWindowConfig;
-import javafxapp.mainwindow.labels.*;
+import javafxapp.labels.*;
 
 public class PlayerMaxInfoView extends VBox {
 

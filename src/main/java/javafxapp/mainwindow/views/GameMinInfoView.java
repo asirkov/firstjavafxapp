@@ -11,7 +11,7 @@ import javafxapp.api.model.GameModel;
 import javafxapp.api.model.GameResultType;
 import javafxapp.api.model.PlayerModel;
 import javafxapp.mainwindow.config.MainWindowConfig;
-import javafxapp.mainwindow.labels.*;
+import javafxapp.labels.*;
 import lombok.ToString;
 import org.apache.commons.lang3.builder.ReflectionToStringBuilder;
 
