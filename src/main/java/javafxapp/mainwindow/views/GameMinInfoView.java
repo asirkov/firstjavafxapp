@@ -55,15 +55,14 @@ public class GameMinInfoView extends HBox {
         VBox.setVgrow(lblWinner, Priority.NEVER);
 
         this.getChildren().addAll(leftVb, rightVb);
-        this.setBorder(new Border(new BorderStroke(
-                        Color.GRAY,
-                        BorderStrokeStyle.SOLID,
-                        new CornerRadii(5),
-                        BorderWidths.DEFAULT)));
+//        this.setBorder(new Border(new BorderStroke(
+//                        Color.GRAY,
+//                        BorderStrokeStyle.SOLID,
+//                        new CornerRadii(5),
+//                        BorderWidths.DEFAULT)));
 
         HBox.setHgrow(leftVb, Priority.ALWAYS);
         HBox.setHgrow(rightVb, Priority.NEVER);
-//        this.getChildren().forEach(c -> HBox.setHgrow(c, Priority.ALWAYS));
 
         this.setCursor(Cursor.HAND);
 

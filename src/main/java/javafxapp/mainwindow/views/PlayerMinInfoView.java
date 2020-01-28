@@ -23,14 +23,12 @@ public class PlayerMinInfoView extends HBox {
 
 
         this.getChildren().addAll(lblPlayerName, onlineIcon);
-        this.setBorder(new Border(new BorderStroke(
-                Color.BLACK,
-                BorderStrokeStyle.SOLID,
-                CornerRadii.EMPTY,
-                BorderWidths.DEFAULT)));
+//        this.setBorder(new Border(new BorderStroke(
+//                Color.BLACK,
+//                BorderStrokeStyle.SOLID,
+//                CornerRadii.EMPTY,
+//                BorderWidths.DEFAULT)));
 
-//        this.setMinWidth(width);
-//        this.setMaxWidth(width);
 
         this.setCursor(Cursor.HAND);
 //        this.setOnMouseClicked(e -> {
