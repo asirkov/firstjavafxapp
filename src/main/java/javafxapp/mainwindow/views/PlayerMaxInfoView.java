@@ -6,6 +6,7 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Paint;
+import javafx.scene.shape.Circle;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import javafx.util.Duration;
@@ -17,10 +18,10 @@ import javafxapp.labels.*;
 public class PlayerMaxInfoView extends VBox {
 
     public PlayerMaxInfoView(PlayerModel player, double width) {
-        ImageView playerAvatarRoot = new ImageView(new Image("https://karate.moscow/image/cache/data/Karate/Kimono/bs-14-two-160x160.png",true));
+        ImageView playerAvatarRoot = new ImageView(new Image("https://cdn.tproger.ru/wp-content/uploads/2018/10/android-chrome-512x512.png",true));
         playerAvatarRoot.setFitWidth(width - 20);
         playerAvatarRoot.setFitHeight(width - 20);
-//        playerAvatarRoot.setTranslateX(playerAvatarRoot.getTranslateX());
+        playerAvatarRoot.setClip(new Circle((width - 20) / 2, (width - 20) / 2, (width - 20) / 2));
 
         Label lblPlayerName = new BigLabel(player.getPlayerName(), width, MainWindowConfig.HEADER_HEIGHT);
 

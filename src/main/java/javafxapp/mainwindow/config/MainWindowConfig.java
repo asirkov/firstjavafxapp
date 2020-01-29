@@ -4,6 +4,6 @@ public class MainWindowConfig {
     public static final String FIRST_FONT_COLOR = "#582";
     public static final String SECOND_FONT_COLOR = "#f00";
 
-    public static final double HEADER_HEIGHT = 25;
+    public static final double HEADER_HEIGHT = 30;
 
 }

@@ -7,6 +7,7 @@ import javafx.scene.paint.Paint;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontPosture;
 import javafx.scene.text.FontWeight;
+import javafxapp.mainwindow.config.MainWindowConfig;
 
 public class RegularLabel extends Label {
     public RegularLabel(String s, double width) {
@@ -15,6 +16,7 @@ public class RegularLabel extends Label {
         this.setAlignment(Pos.CENTER_LEFT);
         this.setMinWidth(width);
         this.setMaxWidth(width);
+        this.setMinHeight(MainWindowConfig.HEADER_HEIGHT);
         this.setPadding(new Insets(0, 0, 0, 0));
     }
 

@@ -6,6 +6,7 @@ import javafx.scene.control.Label;
 import javafx.scene.paint.Paint;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
+import javafxapp.mainwindow.config.MainWindowConfig;
 
 public class SmallLabel extends Label {
     public SmallLabel(String s, double width) {
@@ -14,6 +15,7 @@ public class SmallLabel extends Label {
         this.setAlignment(Pos.CENTER_LEFT);
         this.setMinWidth(width);
         this.setMaxWidth(width);
+        this.setMinHeight(MainWindowConfig.HEADER_HEIGHT);
         this.setPadding(new Insets(0, 0, 0, 0));
     }
 

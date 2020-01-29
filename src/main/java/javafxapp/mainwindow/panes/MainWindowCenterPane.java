@@ -3,11 +3,12 @@ package javafxapp.mainwindow.panes;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.ScrollPane;
-import javafx.scene.layout.HBox;
-import javafx.scene.layout.Priority;
-import javafx.scene.layout.VBox;
+import javafx.scene.layout.*;
+import javafx.scene.paint.Color;
+import javafx.stage.Stage;
 import javafxapp.api.model.GameModel;
 import javafxapp.api.model.PlayerModel;
+import javafxapp.mainwindow.config.MainWindowConfig;
 import javafxapp.mainwindow.separators.HSeparator;
 import javafxapp.mainwindow.separators.VSeparator;
 import javafxapp.mainwindow.views.GameMinInfoView;
@@ -17,7 +18,7 @@ import java.util.List;
 
 public class MainWindowCenterPane extends HBox {
 
-    private ScrollPane createMainWindowGameList(PlayerModel player, List<GameModel> gamesList, double width, double height) {
+    private ScrollPane createMainWindowGameList(Stage primaryStage, PlayerModel player, List<GameModel> gamesList, double width, double height) {
         VBox vb = new VBox();
         vb.setPadding(new Insets(0));
         vb.setSpacing(5);
@@ -27,7 +28,11 @@ public class MainWindowCenterPane extends HBox {
         sp.setContent(vb);
 
         gamesList.forEach(gameModel -> {
-            GameMinInfoView view = new GameMinInfoView(player, gameModel, width);
+            GameMinInfoView view = new GameMinInfoView(primaryStage, player, gameModel, width);
+            view.setBorder(new Border(new BorderStroke(Color.GRAY, Color.GRAY, Color.GRAY, Color.GRAY,
+                    BorderStrokeStyle.SOLID, BorderStrokeStyle.NONE, BorderStrokeStyle.SOLID, BorderStrokeStyle.NONE,
+                    CornerRadii.EMPTY, new BorderWidths(1), Insets.EMPTY)));
+
             vb.getChildren().add(view);
             VBox.setVgrow(view, Priority.ALWAYS);
         });
@@ -43,7 +48,7 @@ public class MainWindowCenterPane extends HBox {
         return sp;
     }
 
-    public MainWindowCenterPane(PlayerModel player, List<GameModel> gamesList, double width, double height) {
+    public MainWindowCenterPane(Stage primaryStage, PlayerModel player, List<GameModel> gamesList, double width, double height) {
         super();
         this.setPadding(new Insets(0));
         this.setAlignment(Pos.TOP_CENTER);
@@ -59,7 +64,7 @@ public class MainWindowCenterPane extends HBox {
         vb.getChildren().addAll(
                 new BigLabel("Games: ", width),
                 new VSeparator(width),
-                createMainWindowGameList(player, gamesList, width, height * 0.93d  - VSeparator.SEPARATOR_HEIGHT));
+                createMainWindowGameList(primaryStage, player, gamesList, width, height - MainWindowConfig.HEADER_HEIGHT - VSeparator.SEPARATOR_HEIGHT));
 
         vb.getChildren().forEach(c -> VBox.setVgrow(c, Priority.ALWAYS));
 

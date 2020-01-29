@@ -7,6 +7,8 @@ import javafx.scene.paint.Paint;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontPosture;
 import javafx.scene.text.FontWeight;
+import javafxapp.mainwindow.MainWindow;
+import javafxapp.mainwindow.config.MainWindowConfig;
 
 public class BigLabel extends Label {
     public BigLabel(String s, double width) {
@@ -15,6 +17,7 @@ public class BigLabel extends Label {
         this.setAlignment(Pos.CENTER_LEFT);
         this.setMinWidth(width);
         this.setMaxWidth(width);
+        this.setMinHeight(MainWindowConfig.HEADER_HEIGHT);
         this.setPadding(new Insets(0, 0, 0, 0));
     }
 

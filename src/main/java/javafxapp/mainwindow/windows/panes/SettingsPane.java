@@ -1,4 +1,4 @@
-package javafxapp.settingswindow.panes;
+package javafxapp.mainwindow.windows.panes;
 
 import javafx.scene.layout.Pane;
 import lombok.Getter;

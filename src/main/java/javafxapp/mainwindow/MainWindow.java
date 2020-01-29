@@ -2,14 +2,11 @@ package javafxapp.mainwindow;
 
 import javafx.application.Application;
 import javafx.geometry.Insets;
-import javafx.geometry.Orientation;
-import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.input.KeyCombination;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
-import javafx.scene.paint.Paint;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafxapp.api.model.GameModel;
@@ -20,13 +17,10 @@ import javafxapp.mainwindow.config.MainWindowConfig;
 import javafxapp.mainwindow.panes.MainWindowCenterPane;
 import javafxapp.mainwindow.panes.MainWindowLeftPane;
 import javafxapp.mainwindow.panes.MainWindowRightPane;
-import javafxapp.mainwindow.separators.HSeparator;
-import javafxapp.settingswindow.SettingsWindow;
+import javafxapp.mainwindow.windows.settingswindow.SettingsWindow;
 
 import java.sql.Date;
 import java.time.Instant;
-import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -131,7 +125,7 @@ public class MainWindow extends Application {
             new GameModel(24L, Date.from(Instant.now()), player, participant6, GameResultType.WHITE_WINS)
         );
 
-        MainWindowCenterPane centerPane = new MainWindowCenterPane(player, gameModelList, (width * 0.4d) - 30, (height));
+        MainWindowCenterPane centerPane = new MainWindowCenterPane(primaryStage, player, gameModelList, (width * 0.4d) - 30, (height));
 
         List<PlayerModel> onlineList = List.of(
                 participant1,
@@ -144,7 +138,7 @@ public class MainWindow extends Application {
                 .stream()
                 .filter(PlayerModel::getOnline).collect(Collectors.toList());
 
-        MainWindowRightPane rightPane = new MainWindowRightPane(player, onlineList, (width * 0.4d) - 30, (height));
+        MainWindowRightPane rightPane = new MainWindowRightPane(primaryStage, player, onlineList, (width * 0.4d) - 30, (height));
 
 
         bp.setCenter(centerPane);

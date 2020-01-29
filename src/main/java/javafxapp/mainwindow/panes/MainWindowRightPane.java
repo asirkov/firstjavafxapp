@@ -3,8 +3,9 @@ package javafxapp.mainwindow.panes;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.*;
-import javafx.scene.layout.Priority;
-import javafx.scene.layout.VBox;
+import javafx.scene.layout.*;
+import javafx.scene.paint.Color;
+import javafx.stage.Stage;
 import javafxapp.api.model.PlayerModel;
 import javafxapp.mainwindow.config.MainWindowConfig;
 import javafxapp.mainwindow.separators.VSeparator;
@@ -41,7 +42,7 @@ public class MainWindowRightPane extends VBox {
             );
 
 
-    private ScrollPane createPlayersList(List<PlayerModel> playersList, double width, double height) {
+    private ScrollPane createPlayersList(Stage primaryStage, List<PlayerModel> playersList, double width, double height) {
         VBox vb = new VBox();
         vb.setPadding(new Insets(0));
         vb.setSpacing(5);
@@ -51,7 +52,11 @@ public class MainWindowRightPane extends VBox {
         sp.setContent(vb);
 
         playersList.forEach(player -> {
-            PlayerMinInfoView view = new PlayerMinInfoView(player, width);
+            PlayerMinInfoView view = new PlayerMinInfoView(primaryStage, player, width);
+            view.setBorder(new Border(new BorderStroke(Color.GRAY, Color.GRAY, Color.GRAY, Color.GRAY,
+                    BorderStrokeStyle.SOLID, BorderStrokeStyle.NONE, BorderStrokeStyle.SOLID, BorderStrokeStyle.NONE,
+                    CornerRadii.EMPTY, new BorderWidths(1), Insets.EMPTY)));
+
             vb.getChildren().add(view);
             VBox.setVgrow(view, Priority.ALWAYS);
         });
@@ -66,7 +71,7 @@ public class MainWindowRightPane extends VBox {
         return sp;
     }
 
-    public MainWindowRightPane(PlayerModel player, List<PlayerModel> playersList, double width, double height) {
+    public MainWindowRightPane(Stage primaryStage, PlayerModel player, List<PlayerModel> playersList, double width, double height) {
         super();
         this.setPadding(new Insets(0, 10, 0, 0));
         this.setAlignment(Pos.TOP_CENTER);
@@ -76,30 +81,34 @@ public class MainWindowRightPane extends VBox {
         VBox.setVgrow(tabPane, Priority.ALWAYS);
 
 
-        Tab tabOnline = new Tab("Online");
+        Tab tabOnline = new Tab("Online: " + onlineList.size());
+        tabOnline.setStyle("-fx-font-size:14;");
         tabOnline.setClosable(false);
-        Tab tabFriends = new Tab("Friends");
+
+        Tab tabFriends = new Tab("Friends: " + friendsList.size());
+        tabFriends.setStyle("-fx-font-size:14;");
         tabFriends.setClosable(false);
 
 
-        Label lblOnlineHeader = new BigLabel("Online: " + onlineList.size(), width / 2);
-        ScrollPane spOnline = createPlayersList(onlineList, width, (height - MainWindowConfig.HEADER_HEIGHT * 2) - VSeparator.SEPARATOR_HEIGHT);
-        VBox.setVgrow(lblOnlineHeader, Priority.NEVER);
+        ScrollPane spOnline = createPlayersList(primaryStage, onlineList, width,
+                (height - MainWindowConfig.HEADER_HEIGHT * 2) - VSeparator.SEPARATOR_HEIGHT - tabPane.getTabMinHeight());
+        spOnline.setPadding(new Insets(VSeparator.SEPARATOR_HEIGHT,0,0,0));
         VBox.setVgrow(spOnline, Priority.ALWAYS);
-        tabOnline.setContent(new VBox(lblOnlineHeader, new VSeparator(width), spOnline));
+        tabOnline.setContent(spOnline);
 
-        Label lblFriendsHeader = new BigLabel("Friends: " + friendsList.size(), width / 2);
-        ScrollPane spFriends = createPlayersList(friendsList, width, (height - MainWindowConfig.HEADER_HEIGHT * 2) - VSeparator.SEPARATOR_HEIGHT);
-        VBox.setVgrow(lblFriendsHeader, Priority.NEVER);
+        ScrollPane spFriends = createPlayersList(primaryStage, friendsList, width,
+                (height - MainWindowConfig.HEADER_HEIGHT * 2) - VSeparator.SEPARATOR_HEIGHT - tabPane.getTabMinHeight());
+        spFriends.setPadding(new Insets(VSeparator.SEPARATOR_HEIGHT,0,0,0));
         VBox.setVgrow(spFriends, Priority.ALWAYS);
-        tabFriends.setContent(new VBox(lblFriendsHeader, new VSeparator(width), spFriends));
+        tabFriends.setContent(spFriends);
 
+        tabPane.setTabDragPolicy(TabPane.TabDragPolicy.FIXED);
+        tabPane.setTabMinHeight(MainWindowConfig.HEADER_HEIGHT);
+        tabPane.setTabMinWidth(width / 2);
         tabPane.getTabs().addAll(tabOnline, tabFriends);
+        tabPane.setPadding(new Insets(0));
 
         this.getChildren().add(tabPane);
-
-//        this.setMinWidth(width);
-//        this.setMaxWidth(width);
     }
 
     public void update() {}
