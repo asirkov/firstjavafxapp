@@ -52,6 +52,13 @@
             <artifactId>commons-lang3</artifactId>
             <version>3.9</version>
         </dependency>
+
+        <!-- Slf4j -->
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-api</artifactId>
+            <version>1.7.28</version>
+        </dependency>
     </dependencies>
 
     <build>
@@ -71,8 +78,8 @@
                 <version>0.0.3</version>
                 <configuration>
 <!--                    <mainClass>javafxapp.loginwindow.LoginWindow</mainClass>-->
-<!--                    <mainClass>javafxapp.gamewindow.GameWindow</mainClass>-->
-                    <mainClass>javafxapp.mainwindow.MainWindow</mainClass>
+                    <mainClass>javafxapp.gamewindow.GameWindow</mainClass>
+<!--                    <mainClass>javafxapp.mainwindow.MainWindow</mainClass>-->
 
                 </configuration>
             </plugin>
