@@ -9,10 +9,10 @@ import javafx.stage.Stage;
 import javafxapp.api.model.GameModel;
 import javafxapp.api.model.PlayerModel;
 import javafxapp.mainwindow.config.MainWindowConfig;
-import javafxapp.mainwindow.separators.HSeparator;
-import javafxapp.mainwindow.separators.VSeparator;
+import javafxapp.util.separators.HSeparator;
+import javafxapp.util.separators.VSeparator;
 import javafxapp.mainwindow.views.GameMinInfoView;
-import javafxapp.labels.*;
+import javafxapp.util.labels.*;
 
 import java.util.List;
 

@@ -1,4 +1,4 @@
-package javafxapp.mainwindow.separators;
+package javafxapp.util.separators;
 
 import javafx.geometry.Insets;
 import javafx.geometry.Orientation;

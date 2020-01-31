@@ -8,9 +8,8 @@ import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import javafxapp.api.model.PlayerModel;
 import javafxapp.mainwindow.config.MainWindowConfig;
-import javafxapp.mainwindow.separators.VSeparator;
+import javafxapp.util.separators.VSeparator;
 import javafxapp.mainwindow.views.PlayerMinInfoView;
-import javafxapp.labels.*;
 
 import java.util.List;
 

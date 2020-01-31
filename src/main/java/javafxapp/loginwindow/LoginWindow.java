@@ -5,10 +5,8 @@ import javafx.geometry.HPos;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Cursor;
-import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
-import javafx.scene.effect.Reflection;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
@@ -17,8 +15,8 @@ import javafx.scene.text.FontWeight;
 import javafx.stage.Stage;
 import javafxapp.config.Config;
 import javafxapp.loginwindow.config.LoginWindowConfig;
-import javafxapp.labels.BigLabel;
-import javafxapp.labels.RegularLabel;
+import javafxapp.util.labels.BigLabel;
+import javafxapp.util.labels.RegularLabel;
 
 public class LoginWindow extends Application {
     private String user = "admin";
