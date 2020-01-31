@@ -1,14 +1,14 @@
 package javafxapp.gamewindow.checker;
 
 public enum CheckerType {
-    BLACK(1), WHITE(-1);
+    BLACK(1, 1), WHITE(-1, 1),
+    BLACK_QUEEN(1, 8), WHITE_QUEEN(-1, 8);
 
-    final boolean queen = false;
-    public int moveDirection;
+    public final int moveDirection;
+    public final int moveDistance;
 
-    CheckerType(int moveDirection) {
+    CheckerType(int moveDirection, int moveDistance) {
         this.moveDirection = moveDirection;
+        this.moveDistance = moveDistance;
     }
-
-
 }

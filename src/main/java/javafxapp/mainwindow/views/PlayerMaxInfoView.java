@@ -13,7 +13,7 @@ import javafx.util.Duration;
 
 import javafxapp.api.model.PlayerModel;
 import javafxapp.mainwindow.config.MainWindowConfig;
-import javafxapp.labels.*;
+import javafxapp.util.labels.*;
 
 public class PlayerMaxInfoView extends VBox {
 
