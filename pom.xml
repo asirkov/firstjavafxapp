@@ -77,8 +77,8 @@
                 <artifactId>javafx-maven-plugin</artifactId>
                 <version>0.0.3</version>
                 <configuration>
-<!--                    <mainClass>javafxapp.loginwindow.LoginWindow</mainClass>-->
-                    <mainClass>javafxapp.gamewindow.GameWindow</mainClass>
+                    <mainClass>javafxapp.App</mainClass>
+<!--                    <mainClass>javafxapp.gamewindow.GameWindow</mainClass>-->
 <!--                    <mainClass>javafxapp.mainwindow.MainWindow</mainClass>-->
 
                 </configuration>

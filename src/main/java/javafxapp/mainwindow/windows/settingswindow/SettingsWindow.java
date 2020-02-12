@@ -27,7 +27,6 @@ public class SettingsWindow extends Parent {
         width = v;
         height = v1;
 
-
         this.getChildren().add(createContent(v, v1));
     }
 }

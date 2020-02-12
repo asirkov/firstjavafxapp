@@ -1,104 +1,41 @@
 package javafxapp.mainwindow;
 
-import javafx.application.Application;
 import javafx.geometry.Insets;
+import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.input.KeyCombination;
-import javafx.scene.layout.*;
-import javafx.scene.paint.Color;
-import javafx.stage.Modality;
+import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 import javafxapp.api.model.GameModel;
 import javafxapp.api.model.GameResultType;
 import javafxapp.api.model.PlayerModel;
+import javafxapp.authwindows.loginwindow.LoginWindow;
 import javafxapp.config.Config;
-import javafxapp.mainwindow.config.MainWindowConfig;
 import javafxapp.mainwindow.panes.MainWindowCenterPane;
 import javafxapp.mainwindow.panes.MainWindowLeftPane;
 import javafxapp.mainwindow.panes.MainWindowRightPane;
-import javafxapp.mainwindow.windows.settingswindow.SettingsWindow;
 
 import java.sql.Date;
 import java.time.Instant;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
-public class MainWindow extends Application {
-
-    BorderPane createMainWindowPanes(double width, double height) {
-        BorderPane bp = new BorderPane();
-        bp.setPadding(new Insets(0));
-
-        bp.setMinSize(width, height);
-        bp.setMaxSize(bp.getMinWidth(), bp.getMinHeight());
-
-        return bp;
-    }
-
-    MenuBar createMenuBar(Stage primaryStage /*, Parent parent*/) {
-        MenuBar mb = new MenuBar();
-
-        Menu mProfileMenu = new Menu("Profile");
-        Menu mAboutMenu = new Menu("About");
-//        mAboutMenu.setOnAction(e -> {
-//        });
-
-        MenuItem profileMenuSettings = new MenuItem("Settings");
-        profileMenuSettings.setOnAction(e -> {
-            Scene settingsScene = new Scene(new SettingsWindow(400, 400));
-
-            Stage settingsWindow = new Stage();
-            settingsWindow.setTitle("Settings");
-            settingsWindow.setScene(settingsScene);
-            settingsWindow.setResizable(false);
-
-            settingsWindow.initModality(Modality.WINDOW_MODAL);
-            settingsWindow.initOwner(primaryStage);
-
-            settingsWindow.show();
-        });
-        profileMenuSettings.setAccelerator(KeyCombination.keyCombination("Ctrl+P"));
-
-        MenuItem profileMenuLogOut = new MenuItem("Log out");
-//        profileMenuLogOut.setOnAction(e -> {
-//        });
-//        profileMenuLogOut.setAccelerator(KeyCombination.keyCombination("Ctrl+X"));
-
-        mProfileMenu.getItems().addAll(profileMenuSettings,
-                new SeparatorMenuItem(),
-                profileMenuLogOut);
-
-        mb.getMenus().addAll(mProfileMenu, mAboutMenu);
-
-        mb.setMinHeight(MainWindowConfig.HEADER_HEIGHT);
-
-        return mb;
-    }
-
-    @Override
-    public void start(Stage primaryStage) {
-        MenuBar mb = createMenuBar(primaryStage);
-
-        double width = Config.WINDOW_WIDTH;
-        double height = Config.WINDOW_HEIGHT - mb.getMaxHeight();
-
-        BorderPane bp = createMainWindowPanes(width, height);
-
-        PlayerModel player = new PlayerModel(1L, 1L, "Developer", 9999L, 0.99d, true);
-
-        MainWindowLeftPane leftPane = new MainWindowLeftPane(player, (width * 0.2d) - 30, (height));
+public class MainWindow extends Parent {
+    PlayerModel player = new PlayerModel(1L, 1L, "Developer", 9999L, 0.99d, true);
 
 
-        PlayerModel participant1 = new PlayerModel(1L, 1L, "Joaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaara", 129L, 0.64d, false);
-        PlayerModel participant2 = new PlayerModel(2L, 2L, "XXXDESTROYERXXX", 13L, 0.29d, true);
-        PlayerModel participant3 = new PlayerModel(3L, 3L, "CCmasterC", 1181L, 0.48d, false);
-        PlayerModel participant4 = new PlayerModel(4L, 4L, "kiskaaaaaaaaa", 22L, 0.78d, true);
-        PlayerModel participant5 = new PlayerModel(5L, 5L, "sasha_112", 65L, 0.45d, true);
-        PlayerModel participant6 = new PlayerModel(6L, 6L, "noname-1", 2210L, 0.54d, false);
+    PlayerModel participant1 = new PlayerModel(1L, 1L, "Jora", 129L, 0.64d, false);
+    PlayerModel participant2 = new PlayerModel(2L, 2L, "Petya", 13L, 0.29d, true);
+    PlayerModel participant3 = new PlayerModel(3L, 3L, "Zhenia", 1181L, 0.48d, false);
+    PlayerModel participant4 = new PlayerModel(4L, 4L, "Olya", 22L, 0.78d, true);
+    PlayerModel participant5 = new PlayerModel(5L, 5L, "Sasha", 65L, 0.45d, true);
+    PlayerModel participant6 = new PlayerModel(6L, 6L, "Ira", 2210L, 0.54d, false);
 
 
-        List<GameModel> gameModelList = List.of(
+    List<GameModel> gameModelList = List.of(
             new GameModel(1L, Date.from(Instant.now()), player, participant2, GameResultType.BLACK_WINS),
             new GameModel(2L, Date.from(Instant.now()), participant3, player, GameResultType.WHITE_WINS),
             new GameModel(3L, Date.from(Instant.now()), participant5, player, GameResultType.DRAW),
@@ -123,23 +60,107 @@ public class MainWindow extends Application {
             new GameModel(22L, Date.from(Instant.now()), player, participant2, GameResultType.DRAW),
             new GameModel(23L, Date.from(Instant.now()), player, participant4, GameResultType.WHITE_WINS),
             new GameModel(24L, Date.from(Instant.now()), player, participant6, GameResultType.WHITE_WINS)
-        );
+    );
 
-        MainWindowCenterPane centerPane = new MainWindowCenterPane(primaryStage, player, gameModelList, (width * 0.4d) - 30, (height));
+    List<PlayerModel> onlineList = List.of(
+            participant1,
+            participant2,
+            participant3,
+            participant4,
+            participant5,
+            participant6
+    )
+            .stream()
+            .filter(PlayerModel::getOnline).collect(Collectors.toList());
 
-        List<PlayerModel> onlineList = List.of(
-                participant1,
-                participant2,
-                participant3,
-                participant4,
-                participant5,
-                participant6
-                )
-                .stream()
-                .filter(PlayerModel::getOnline).collect(Collectors.toList());
 
-        MainWindowRightPane rightPane = new MainWindowRightPane(primaryStage, player, onlineList, (width * 0.4d) - 30, (height));
+    //###################################################################################3
 
+    private void loadSettingsWindow(Stage primaryStage) {
+
+    }
+
+    private void showConfirmation(Stage primaryStage) {
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+        alert.setTitle("Confirmation");
+        alert.setHeaderText("Are you sure you want to log out?");
+        alert.setResizable(false);
+
+        Optional<ButtonType> option = alert.showAndWait();
+        option.ifPresent(op -> {
+            if (option.get() == ButtonType.OK) {
+                loadLoginWindow(primaryStage);
+                alert.close();
+            } else if (option.get() == ButtonType.CANCEL) {
+                alert.close();
+            }
+        });
+    }
+
+    private void loadLoginWindow(Stage primaryStage) {
+        Scene loginWindowScene = new Scene(new LoginWindow(primaryStage));
+
+        primaryStage.setTitle("Login");
+        primaryStage.setScene(loginWindowScene);
+        primaryStage.setResizable(false);
+
+        primaryStage.show();
+    }
+
+    MenuBar createMenuBar(Stage primaryStage) {
+        MenuBar mb = new MenuBar();
+        mb.setMinHeight(Config.MENU_HEIGHT);
+
+        Menu mProfileMenu = new Menu("Profile");
+        Menu mAboutMenu = new Menu("About");
+//        mAboutMenu.setOnAction(e -> {
+//        });
+
+        MenuItem profileMenuSettings = new MenuItem("Settings");
+        profileMenuSettings.setOnAction(e -> {
+//            Scene settingsScene = new Scene(new SettingsWindow(400, 400));
+//
+//            Stage settingsWindow = new Stage();
+//            settingsWindow.setTitle("Settings");
+//            settingsWindow.setScene(settingsScene);
+//            settingsWindow.setResizable(false);
+//
+//            settingsWindow.initModality(Modality.WINDOW_MODAL);
+//            settingsWindow.initOwner(primaryStage);
+//
+//            settingsWindow.show();
+        });
+        profileMenuSettings.setAccelerator(KeyCombination.keyCombination("Ctrl+P"));
+
+        MenuItem profileMenuLogOut = new MenuItem("Log out");
+        profileMenuLogOut.setOnAction(e -> showConfirmation(primaryStage));
+
+        mProfileMenu.getItems().addAll(profileMenuSettings,
+                new SeparatorMenuItem(),
+                profileMenuLogOut);
+
+        mb.getMenus().addAll(mProfileMenu, mAboutMenu);
+        return mb;
+    }
+
+    private BorderPane createMainWindowPanes(Stage primaryStage, double width, double height) {
+        MenuBar mb = createMenuBar(primaryStage);
+
+        BorderPane bp = new BorderPane();
+        bp.setPadding(new Insets(0));
+        bp.setMinWidth(width);
+        bp.setMinHeight(height);
+        bp.setMaxHeight(height);
+
+        double paneHeight = height - Config.MENU_HEIGHT;
+        double leftPaneWidth = width * 0.2d - 30;
+        double centerPaneWidth = width * 0.4d - 30;
+        double rightPaneWidth = width * 0.4d - 30;
+
+
+        MainWindowLeftPane leftPane = new MainWindowLeftPane(player, leftPaneWidth, paneHeight);
+        MainWindowCenterPane centerPane = new MainWindowCenterPane(primaryStage, player, gameModelList, centerPaneWidth, paneHeight);
+        MainWindowRightPane rightPane = new MainWindowRightPane(primaryStage, player, onlineList, rightPaneWidth, paneHeight);
 
         bp.setCenter(centerPane);
         bp.setLeft(leftPane);
@@ -148,17 +169,11 @@ public class MainWindow extends Application {
         bp.setTop(mb);
         bp.setBottom(new Pane());
 
-
-        Scene scene = new Scene(bp, Config.WINDOW_WIDTH, Config.WINDOW_HEIGHT, Color.TRANSPARENT);
-        primaryStage.setScene(scene);
-        primaryStage.setMinWidth(Config.WINDOW_WIDTH);
-        primaryStage.setMinHeight(Config.WINDOW_HEIGHT);
-        primaryStage.setResizable(false);
-
-        primaryStage.show();
+        return bp;
     }
 
-    public static void main(String[] args) {
-        launch();
+    public MainWindow(Stage primaryStage, PlayerModel player) {
+        super();
+        this.getChildren().add(createMainWindowPanes(primaryStage, Config.WINDOW_WIDTH, Config.WINDOW_HEIGHT));
     }
 }

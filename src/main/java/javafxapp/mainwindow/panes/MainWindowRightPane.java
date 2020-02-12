@@ -16,28 +16,28 @@ import java.util.List;
 public class MainWindowRightPane extends VBox {
 
     private List<PlayerModel> onlineList = List.of(
-            new PlayerModel(13L, 13L, "<aaaaa>", 1229L, 0.68d, true),
-            new PlayerModel(14L, 14L, "no!checrs", 929L, 0.4d, true),
-            new PlayerModel(15L, 15L, "prafessiOnal", 297L, 0.56d, true),
-            new PlayerModel(16L, 16L, "Yoyo", 129L, 0.64d, true),
-            new PlayerModel(17L, 17L, "<aa>", 1229L, 0.68d, true),
-            new PlayerModel(18L, 18L, "no!help", 99L, 0.41d, true),
-            new PlayerModel(19L, 19L, "xexexexe", 267L, 0.16d, true),
-            new PlayerModel(20L, 20L, "OHNOOOOOO", 109L, 0.34d, true),
-            new PlayerModel(21L, 13L, "<aaaaa>", 1229L, 0.68d, true),
-            new PlayerModel(22L, 14L, "no!checrs", 929L, 0.4d, true),
-            new PlayerModel(23L, 15L, "prafessiOnal", 297L, 0.56d, true),
-            new PlayerModel(24L, 16L, "Yoyo", 129L, 0.64d, true),
-            new PlayerModel(25L, 17L, "<aa>", 1229L, 0.68d, true),
-            new PlayerModel(26L, 18L, "no!help", 99L, 0.41d, true),
-            new PlayerModel(27L, 19L, "xexexexe", 267L, 0.16d, true),
-            new PlayerModel(28L, 20L, "OHNOOOOOO", 109L, 0.34d, true)
+            new PlayerModel(13L, 13L, "Stepa", 1229L, 0.68d, true),
+            new PlayerModel(14L, 14L, "Petro", 929L, 0.4d, true),
+            new PlayerModel(15L, 15L, "Kesha", 297L, 0.56d, true),
+            new PlayerModel(16L, 16L, "Serega", 129L, 0.64d, true),
+            new PlayerModel(17L, 17L, "Kolia", 1229L, 0.68d, true),
+            new PlayerModel(18L, 18L, "Misha", 99L, 0.41d, true),
+            new PlayerModel(19L, 19L, "Andrey", 267L, 0.16d, true),
+            new PlayerModel(20L, 20L, "Zina", 109L, 0.34d, true),
+            new PlayerModel(21L, 13L, "Alina", 1229L, 0.68d, true),
+            new PlayerModel(22L, 14L, "Olena", 929L, 0.4d, true),
+            new PlayerModel(23L, 15L, "Nikita", 297L, 0.56d, true),
+            new PlayerModel(24L, 16L, "Liosha", 129L, 0.64d, true),
+            new PlayerModel(25L, 17L, "Aleksei", 1229L, 0.68d, true),
+            new PlayerModel(26L, 18L, "Lionia", 99L, 0.41d, true),
+            new PlayerModel(27L, 19L, "Semen", 267L, 0.16d, true),
+            new PlayerModel(28L, 20L, "Inokentii", 109L, 0.34d, true)
             );
 
     private List<PlayerModel> friendsList = List.of(
-            new PlayerModel(16L, 16L, "Yoyo", 129L, 0.64d, true),
-            new PlayerModel(17L, 17L, "HalloP", 129L, 0.64d, false),
-            new PlayerModel(18L, 18L, "PUT IN", 129L, 0.64d, false)
+            new PlayerModel(16L, 16L, "Serega", 129L, 0.64d, true),
+            new PlayerModel(29L, 29L, "Nikolay", 129L, 0.64d, false),
+            new PlayerModel(30L, 30L, "Sergii", 129L, 0.64d, false)
             );
 
 
