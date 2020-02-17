@@ -1,5 +1,6 @@
 package javafxapp.mainwindow.views;
 
+import javafx.geometry.Insets;
 import javafx.scene.control.Label;
 import javafx.scene.control.Tooltip;
 import javafx.scene.image.Image;
@@ -13,15 +14,17 @@ import javafx.util.Duration;
 
 import javafxapp.api.model.PlayerModel;
 import javafxapp.mainwindow.config.MainWindowConfig;
-import javafxapp.labels.*;
+import javafxapp.util.labels.*;
 
 public class PlayerMaxInfoView extends VBox {
 
     public PlayerMaxInfoView(PlayerModel player, double width) {
+        this.setPadding(new Insets(0, 10, 0, 10));
+
         ImageView playerAvatarRoot = new ImageView(new Image("https://cdn.tproger.ru/wp-content/uploads/2018/10/android-chrome-512x512.png",true));
         playerAvatarRoot.setFitWidth(width - 20);
         playerAvatarRoot.setFitHeight(width - 20);
-        playerAvatarRoot.setClip(new Circle((width - 20) / 2, (width - 20) / 2, (width - 20) / 2));
+        playerAvatarRoot.setClip(new Circle((width) / 2, (width) / 2, (width) / 2));
 
         Label lblPlayerName = new BigLabel(player.getPlayerName(), width, MainWindowConfig.HEADER_HEIGHT);
 
@@ -38,5 +41,7 @@ public class PlayerMaxInfoView extends VBox {
                 new RegularLabel("Games:\t" + player.getGames(), width, Paint.valueOf(MainWindowConfig.FIRST_FONT_COLOR)),
                 new RegularLabel("Wins:\t" + (player.getRate() * 100) + "%", width, Paint.valueOf(MainWindowConfig.FIRST_FONT_COLOR))
         );
+
+        this.setBackground(new Background(new BackgroundFill(Paint.valueOf("#00f"), CornerRadii.EMPTY, Insets.EMPTY)));
     }
 }

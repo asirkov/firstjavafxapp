@@ -10,7 +10,7 @@ import javafxapp.config.Config;
 public class App extends Application {
     @Override
     public void start(Stage primaryStage) throws Exception {
-        primaryStage.setTitle("Login Window");
+        primaryStage.setTitle("Login");
 
         Scene scene = new Scene(new LoginWindow(primaryStage), Config.WINDOW_WIDTH, Config.WINDOW_HEIGHT);
 

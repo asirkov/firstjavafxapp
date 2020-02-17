@@ -2,10 +2,11 @@ package javafxapp.mainwindow.panes;
 
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
-import javafx.scene.control.Label;
-import javafx.scene.layout.Priority;
-import javafx.scene.layout.VBox;
+import javafx.scene.layout.*;
 import javafxapp.api.model.PlayerModel;
+import javafxapp.mainwindow.config.MainWindowConfig;
+import javafxapp.util.ActionButton;
+import javafxapp.util.separators.HSeparator;
 import javafxapp.util.separators.VSeparator;
 import javafxapp.mainwindow.views.PlayerMaxInfoView;
 import javafxapp.util.labels.*;
@@ -17,16 +18,22 @@ public class MainWindowLeftPane extends VBox {
 
     public MainWindowLeftPane(PlayerModel player, double width, double height) {
         super();
-        this.setPadding(new Insets(0, 0, 0, 10));
+        this.setPadding(new Insets(0, 10, 0, 10));
         this.setAlignment(Pos.TOP_CENTER);
         this.setSpacing(0);
 
-        Label lblProfileHeader = new BigLabel("Profile: ", width);
+        ActionButton btnNewGame = new ActionButton("New Game", width);
+        btnNewGame.setOnAction(e -> {
+        });
+
+        double playerMaxInfoWidth = width - 2 * HSeparator.SEPARATOR_WIDTH;
+
         this.getChildren().addAll(
-                lblProfileHeader,
-                new VSeparator(width),
-                new PlayerMaxInfoView(player, width),
-                new VSeparator(width));
+                new HeaderLabel("Profile: ", width),
+                new VSeparator(width - 2 * HSeparator.SEPARATOR_WIDTH),
+                new PlayerMaxInfoView(player,  playerMaxInfoWidth),
+                new VSeparator(width - 2 * HSeparator.SEPARATOR_WIDTH),
+                btnNewGame);
 
         this.getChildren().forEach(c -> VBox.setVgrow(c, Priority.ALWAYS));
     }

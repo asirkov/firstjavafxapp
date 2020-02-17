@@ -72,20 +72,19 @@ public class MainWindowRightPane extends VBox {
 
     public MainWindowRightPane(Stage primaryStage, PlayerModel player, List<PlayerModel> playersList, double width, double height) {
         super();
-        this.setPadding(new Insets(0, 10, 0, 0));
+        this.setPadding(new Insets(0));
         this.setAlignment(Pos.TOP_CENTER);
         this.setSpacing(0);
 
         TabPane tabPane = new TabPane();
         VBox.setVgrow(tabPane, Priority.ALWAYS);
 
-
         Tab tabOnline = new Tab("Online: " + onlineList.size());
-        tabOnline.setStyle("-fx-font-size:14;");
+        tabOnline.setStyle("-fx-font: bold 16px \"helvetica neue\";");
         tabOnline.setClosable(false);
 
         Tab tabFriends = new Tab("Friends: " + friendsList.size());
-        tabFriends.setStyle("-fx-font-size:14;");
+        tabFriends.setStyle("-fx-font: bold 16px \"helvetica neue\";");
         tabFriends.setClosable(false);
 
 
@@ -102,7 +101,8 @@ public class MainWindowRightPane extends VBox {
         tabFriends.setContent(spFriends);
 
         tabPane.setTabDragPolicy(TabPane.TabDragPolicy.FIXED);
-        tabPane.setTabMinHeight(MainWindowConfig.HEADER_HEIGHT);
+
+        tabPane.setTabMinHeight(MainWindowConfig.HEADER_HEIGHT - 3);
         tabPane.setTabMinWidth(width / 2);
         tabPane.getTabs().addAll(tabOnline, tabFriends);
         tabPane.setPadding(new Insets(0));

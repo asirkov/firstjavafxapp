@@ -8,13 +8,12 @@ import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
-import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafxapp.api.model.PlayerModel;
 import javafxapp.mainwindow.views.icons.PlayerOnlineIcon;
-import javafxapp.labels.*;
+import javafxapp.util.labels.*;
 import javafxapp.mainwindow.windows.PlayerMaxInfoWindow;
 
 import java.util.List;

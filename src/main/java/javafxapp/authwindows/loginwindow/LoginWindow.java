@@ -84,8 +84,11 @@ public class LoginWindow extends Parent {
 
         // Text fields
         TextField txtLogin = new RegularTextField();
+        txtLogin.setText("admin");
         final PasswordField txtPassword = new RegularPasswordField();
-        TextField txtPasswordVisible = new RegularTextField();
+        txtPassword.setText("admin");
+        final TextField txtPasswordVisible = new RegularTextField();
+        txtPasswordVisible.setText("admin");
 
         // Checkbox for show passwords
         CheckBox chPasswordVisible = new RegularCheckBox("Show password.");

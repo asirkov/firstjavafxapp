@@ -50,7 +50,7 @@ public class MainWindowCenterPane extends HBox {
 
     public MainWindowCenterPane(Stage primaryStage, PlayerModel player, List<GameModel> gamesList, double width, double height) {
         super();
-        this.setPadding(new Insets(0));
+        this.setPadding(new Insets(0, 10, 0, 10));
         this.setAlignment(Pos.TOP_CENTER);
         this.setFillHeight(true);
         this.setSpacing(0);
@@ -62,7 +62,7 @@ public class MainWindowCenterPane extends HBox {
         VSeparator separator = new VSeparator(width);
 
         vb.getChildren().addAll(
-                new BigLabel("Games: ", width),
+                new HeaderLabel("Games: ", width),
                 new VSeparator(width),
                 createMainWindowGameList(primaryStage, player, gamesList, width, height - MainWindowConfig.HEADER_HEIGHT - VSeparator.SEPARATOR_HEIGHT));
 

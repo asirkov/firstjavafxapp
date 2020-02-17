@@ -13,6 +13,7 @@ import javafxapp.api.model.GameResultType;
 import javafxapp.api.model.PlayerModel;
 import javafxapp.authwindows.loginwindow.LoginWindow;
 import javafxapp.config.Config;
+import javafxapp.mainwindow.config.MainWindowConfig;
 import javafxapp.mainwindow.panes.MainWindowCenterPane;
 import javafxapp.mainwindow.panes.MainWindowLeftPane;
 import javafxapp.mainwindow.panes.MainWindowRightPane;
@@ -149,13 +150,14 @@ public class MainWindow extends Parent {
         BorderPane bp = new BorderPane();
         bp.setPadding(new Insets(0));
         bp.setMinWidth(width);
+        bp.setMaxWidth(width);
         bp.setMinHeight(height);
         bp.setMaxHeight(height);
 
         double paneHeight = height - Config.MENU_HEIGHT;
-        double leftPaneWidth = width * 0.2d - 30;
-        double centerPaneWidth = width * 0.4d - 30;
-        double rightPaneWidth = width * 0.4d - 30;
+        double leftPaneWidth = width * MainWindowConfig.LEFT_PANE_WIDTH - 30;
+        double centerPaneWidth = width * MainWindowConfig.CENTER_PANE_WIDTH - 30;
+        double rightPaneWidth = width * MainWindowConfig.RIGHT_PANE_WIDTH - 30;
 
 
         MainWindowLeftPane leftPane = new MainWindowLeftPane(player, leftPaneWidth, paneHeight);
