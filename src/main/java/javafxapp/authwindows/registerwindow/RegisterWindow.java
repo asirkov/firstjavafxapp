@@ -8,15 +8,11 @@ import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
-import javafx.scene.text.Font;
-import javafx.scene.text.FontWeight;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
-import javafx.util.Duration;
 import javafxapp.authwindows.config.AuthConfig;
 import javafxapp.authwindows.loginwindow.LoginWindow;
 import javafxapp.authwindows.util.ActionButton;
@@ -29,9 +25,6 @@ import javafxapp.authwindows.util.textfields.RegularTextField;
 import javafxapp.config.Config;
 
 import java.io.File;
-import java.io.FileInputStream;
-import java.io.IOException;
-import java.util.Objects;
 import java.util.Optional;
 
 public class RegisterWindow extends Parent {
