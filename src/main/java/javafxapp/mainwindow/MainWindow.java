@@ -160,7 +160,7 @@ public class MainWindow extends Parent {
         double rightPaneWidth = width * MainWindowConfig.RIGHT_PANE_WIDTH - 30;
 
 
-        MainWindowLeftPane leftPane = new MainWindowLeftPane(player, leftPaneWidth, paneHeight);
+        MainWindowLeftPane leftPane = new MainWindowLeftPane(player, leftPaneWidth);
         MainWindowCenterPane centerPane = new MainWindowCenterPane(primaryStage, player, gameModelList, centerPaneWidth, paneHeight);
         MainWindowRightPane rightPane = new MainWindowRightPane(primaryStage, player, onlineList, rightPaneWidth, paneHeight);
 

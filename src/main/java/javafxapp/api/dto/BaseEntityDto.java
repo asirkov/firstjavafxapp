@@ -7,7 +7,7 @@ import java.util.Date;
 
 @Data
 @JsonIgnoreProperties(ignoreUnknown = true)
-public abstract class BaseDto {
+public abstract class BaseEntityDto {
     private Long id;
     private Date createdAt;
     private Date updatedAt;

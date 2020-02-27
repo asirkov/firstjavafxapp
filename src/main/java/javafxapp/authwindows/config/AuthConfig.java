@@ -22,9 +22,9 @@ public class AuthConfig {
 
     //
     public static final int MAX_PASSWORD_SIZE = 128;
-    public static final int MIN_PASSWORD_SIZE = 6;
+    public static final int MIN_PASSWORD_SIZE = 0;
     public static final int MAX_LOGIN_SIZE = 128;
-    public static final int MIN_LOGIN_SIZE = 6;
+    public static final int MIN_LOGIN_SIZE = 0;
 
 
 }

@@ -1,20 +1,18 @@
 package javafxapp.authwindows.loginwindow;
 
-import javafx.application.Application;
 import javafx.geometry.HPos;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
-import javafx.scene.Cursor;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
-import javafx.scene.text.Font;
-import javafx.scene.text.FontPosture;
-import javafx.scene.text.FontWeight;
-import javafx.stage.Modality;
 import javafx.stage.Stage;
+import javafxapp.api.dao.AuthDataApiDao;
+import javafxapp.api.dto.LoginRequestDto;
+import javafxapp.api.dto.LoginResponseDto;
+import javafxapp.api.security.ApiPasswordEncoder;
 import javafxapp.authwindows.config.AuthConfig;
 import javafxapp.authwindows.registerwindow.RegisterWindow;
 import javafxapp.authwindows.util.ActionButton;
@@ -26,14 +24,10 @@ import javafxapp.authwindows.util.textfields.RegularPasswordField;
 import javafxapp.authwindows.util.textfields.RegularTextField;
 import javafxapp.config.Config;
 import javafxapp.mainwindow.MainWindow;
-import javafxapp.util.labels.RegularLabel;
 
 public class LoginWindow extends Parent {
-    private String user = "admin";
-    private String pw = "admin";
-
-    private String checkUser;
-    private String checkPw;
+    private final AuthDataApiDao authDataApiDao = new AuthDataApiDao();
+    private final ApiPasswordEncoder apiPasswordEncoder = new ApiPasswordEncoder();
 
     private void lightTextBoxes(Color color, TextField... textFields) {
         for (TextField textField : textFields) {
@@ -117,14 +111,16 @@ public class LoginWindow extends Parent {
 
         // Action events
         btnLogin.setOnAction(e -> {
-            checkUser = txtLogin.getText();
-            checkPw = txtPassword.getText();
-            if(checkUser.equals(user) && checkPw.equals(pw)){
-//                lblMessage.setText("Successfully login!");
-//                lblMessage.setTextFill(Color.GREEN);
+            String checkUser = txtLogin.getText().strip();
+            String checkPw = txtPassword.getText().strip();
+
+            LoginResponseDto loginResponseDto = authDataApiDao.login(
+                    new LoginRequestDto(checkUser, apiPasswordEncoder.sha256(checkPw)));
+
+            if (loginResponseDto.isAuthorized()) {
                 loadMainWindow(primaryStage);
-            }
-            else{
+
+            } else {
                 lblMessage.setText("Incorrect login or password!");
                 lblMessage.setTextFill(Color.RED);
 

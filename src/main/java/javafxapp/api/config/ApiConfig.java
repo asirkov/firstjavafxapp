@@ -1,58 +1,39 @@
 package javafxapp.api.config;
 
-import org.yaml.snakeyaml.Yaml;
+import lombok.Getter;
 
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.io.InputStream;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Optional;
+import java.net.URL;
+import java.util.Properties;
 
+@Getter
 public class ApiConfig {
-    private static Map<String, Object> CONFIG = null;
+    private String gameApiBase;
+    private String gameApiPath;
+    private int gameApiPort;
 
-    private final String gameApiBase;
-    private final String gameApiPath;
-    private final int gameApiPort;
+    private String secret;
 
-    private ApiConfig() {
-        Yaml yaml = new Yaml();
-        InputStream inputStream = this.getClass()
-                .getClassLoader()
-                .getResourceAsStream("application.yaml");
-        CONFIG = yaml.load(inputStream);
+    public ApiConfig() {
+        Properties defaultProps = new Properties();
 
-        @SuppressWarnings("unchecked")
-        Map<String, String> gameApiConfig = (HashMap<String, String>) getConfig("gameapi");
+        try (InputStream in = this.getClass().getClassLoader().getResourceAsStream("default.properties")) {
+            if (in != null) {
+                defaultProps.load(in);
+                gameApiBase = defaultProps.getProperty("gameapi.baseurl");
+                gameApiPath = defaultProps.getProperty("gameapi.path");
+                gameApiPort = Integer.parseInt(defaultProps.getProperty("gameapi.port"));
 
-        gameApiBase = gameApiConfig.getOrDefault("base", null);
-        gameApiPath = gameApiConfig.getOrDefault("path", null);
-//        gameApiPort = Optional.ofNullable(gameApiConfig.getOrDefault("port", ""))
-//                .map(Ints::tryParse)
-//                .orElse(0);
-        gameApiPort = 8888;
-    }
+                secret = defaultProps.getProperty("gameapi.secret");
 
-    private static ApiConfig INSTANCE = null;
+                System.out.println();
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
 
-    public static ApiConfig getInstance() {
-        if (INSTANCE == null)
-            INSTANCE = new ApiConfig();
-        return INSTANCE;
-    }
-
-    Object getConfig(String key) {
-        return CONFIG.getOrDefault(key, null);
-    }
-
-    public String getGameApiBase() {
-        return gameApiBase;
-    }
-
-    public String getGameApiPath() {
-        return gameApiPath;
-    }
-
-    public int getGameApiPort() {
-        return gameApiPort;
+        }
     }
 }

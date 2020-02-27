@@ -9,7 +9,7 @@ import lombok.*;
 @NoArgsConstructor
 @AllArgsConstructor
 @JsonIgnoreProperties(ignoreUnknown = true)
-public class LoginResponseDto extends BaseResponseDto{
-    private String username;
-    private boolean authorized;
+public abstract class BaseResponseDto {
+    private String token;
+    private String message;
 }

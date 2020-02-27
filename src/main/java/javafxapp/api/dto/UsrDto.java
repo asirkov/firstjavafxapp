@@ -9,7 +9,7 @@ import lombok.ToString;
 @Builder
 @ToString
 @JsonIgnoreProperties(ignoreUnknown = true)
-public class UsrDto extends BaseDto {
+public class UsrDto extends BaseEntityDto {
     private String username;
     private String player;
 

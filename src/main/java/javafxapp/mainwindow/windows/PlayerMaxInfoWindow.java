@@ -9,7 +9,6 @@ public class PlayerMaxInfoWindow extends Parent {
     private GridPane createContent(PlayerModel playerModel, double width, double height) {
         GridPane gp = new GridPane();
 
-
         gp.setMinSize(width, height);
 
         return gp;

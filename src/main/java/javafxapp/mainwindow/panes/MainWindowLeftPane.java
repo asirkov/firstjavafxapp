@@ -2,6 +2,7 @@ package javafxapp.mainwindow.panes;
 
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
+import javafx.scene.control.Button;
 import javafx.scene.layout.*;
 import javafxapp.api.model.PlayerModel;
 import javafxapp.mainwindow.config.MainWindowConfig;
@@ -16,9 +17,9 @@ public class MainWindowLeftPane extends VBox {
 //    private VBox createContent() {
 //    }
 
-    public MainWindowLeftPane(PlayerModel player, double width, double height) {
+    public MainWindowLeftPane(PlayerModel player, double width) {
         super();
-        this.setPadding(new Insets(0, 10, 0, 10));
+        this.setPadding(new Insets(0, 10, 20, 10));
         this.setAlignment(Pos.TOP_CENTER);
         this.setSpacing(0);
 

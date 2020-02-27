@@ -13,6 +13,7 @@ import javafx.scene.text.FontWeight;
 import javafx.util.Duration;
 
 import javafxapp.api.model.PlayerModel;
+import javafxapp.authwindows.config.AuthConfig;
 import javafxapp.mainwindow.config.MainWindowConfig;
 import javafxapp.util.labels.*;
 
@@ -21,7 +22,7 @@ public class PlayerMaxInfoView extends VBox {
     public PlayerMaxInfoView(PlayerModel player, double width) {
         this.setPadding(new Insets(0, 10, 0, 10));
 
-        ImageView playerAvatarRoot = new ImageView(new Image("https://cdn.tproger.ru/wp-content/uploads/2018/10/android-chrome-512x512.png",true));
+        ImageView playerAvatarRoot = new ImageView(new Image(AuthConfig.DEFAULT_AVATAR_PATH,true));
         playerAvatarRoot.setFitWidth(width - 20);
         playerAvatarRoot.setFitHeight(width - 20);
         playerAvatarRoot.setClip(new Circle((width) / 2, (width) / 2, (width) / 2));
@@ -41,7 +42,5 @@ public class PlayerMaxInfoView extends VBox {
                 new RegularLabel("Games:\t" + player.getGames(), width, Paint.valueOf(MainWindowConfig.FIRST_FONT_COLOR)),
                 new RegularLabel("Wins:\t" + (player.getRate() * 100) + "%", width, Paint.valueOf(MainWindowConfig.FIRST_FONT_COLOR))
         );
-
-        this.setBackground(new Background(new BackgroundFill(Paint.valueOf("#00f"), CornerRadii.EMPTY, Insets.EMPTY)));
     }
 }

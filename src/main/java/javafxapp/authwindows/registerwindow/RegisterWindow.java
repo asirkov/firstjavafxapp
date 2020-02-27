@@ -13,6 +13,10 @@ import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
+import javafxapp.api.dao.AuthDataApiDao;
+import javafxapp.api.dto.RegisterRequestDto;
+import javafxapp.api.dto.RegisterResponseDto;
+import javafxapp.api.security.ApiPasswordEncoder;
 import javafxapp.authwindows.config.AuthConfig;
 import javafxapp.authwindows.loginwindow.LoginWindow;
 import javafxapp.authwindows.util.ActionButton;
@@ -25,9 +29,14 @@ import javafxapp.authwindows.util.textfields.RegularTextField;
 import javafxapp.config.Config;
 
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.util.Optional;
 
 public class RegisterWindow extends Parent {
+    private final AuthDataApiDao authDataApiDao = new AuthDataApiDao();
+    private final ApiPasswordEncoder apiPasswordEncoder = new ApiPasswordEncoder();
 
 
     private void lightTextBoxes(Color color, TextField... textFields) {
@@ -47,20 +56,35 @@ public class RegisterWindow extends Parent {
         primaryStage.show();
     }
 
-    private void showMessage(Stage primaryStage) {
-        Alert alert = new Alert(Alert.AlertType.INFORMATION);
-        alert.setTitle("Success");
-        alert.setHeaderText("Registration was successful\n\nLog in to your account, please.");
-        alert.setResizable(false);
+    private void showMessage(Stage primaryStage, RegisterRequestDto registerRequestDto) {
+        RegisterResponseDto registerResponseDto = authDataApiDao.register(registerRequestDto);
 
-        alert.setOnCloseRequest(e -> loadLoginWindow(primaryStage));
+        if (registerResponseDto.isRegistered()) {
+            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+            alert.setTitle("Success");
+            alert.setHeaderText("Registration was successful\n\nLog in to your account, please.");
+            alert.setResizable(false);
 
-        Optional<ButtonType> option = alert.showAndWait();
-        option.ifPresent(op ->alert.close());
+            alert.setOnCloseRequest(e -> loadLoginWindow(primaryStage));
+
+            Optional<ButtonType> option = alert.showAndWait();
+            option.ifPresent(op ->alert.close());
+        } else {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Error");
+            alert.setHeaderText(String.format("Failed registration, try again.\n\nMessage: %s", registerResponseDto.getMessage()));
+            alert.setResizable(false);
+
+//            alert.setOnCloseRequest(e -> loadLoginWindow(primaryStage));
+
+            Optional<ButtonType> option = alert.showAndWait();
+            option.ifPresent(op ->alert.close());
+
+        }
 
     }
 
-    private void showConfirmation(Stage primaryStage) {
+    private void showConfirmation(Stage primaryStage, RegisterRequestDto registerRequestDto) {
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
         alert.setTitle("Confirmation");
         alert.setHeaderText("Confirm Registration?");
@@ -69,7 +93,7 @@ public class RegisterWindow extends Parent {
         Optional<ButtonType> option = alert.showAndWait();
         option.ifPresent(op -> {
             if (option.get() == ButtonType.OK) {
-                showMessage(primaryStage);
+                showMessage(primaryStage, registerRequestDto);
                 alert.close();
             } else if (option.get() == ButtonType.CANCEL) {
                 alert.close();
@@ -144,6 +168,9 @@ public class RegisterWindow extends Parent {
             }
         });
 
+        VBox vbAvatar = new VBox(imgAvatarRoot);
+        vbAvatar.setAlignment(Pos.CENTER);
+
         // Message for login/password info
         Label lblMessageText = new SmallLabel("");
         lblMessageText.setAlignment(Pos.CENTER);
@@ -210,7 +237,18 @@ public class RegisterWindow extends Parent {
                 lightTextBoxes(Color.TRANSPARENT, txtPassword, txtPasswordVisible, txtRptPassword, txtRptPasswordVisible);
 
 //                loadLoginWindow(primaryStage);
-                showConfirmation(primaryStage);
+
+                byte[] avatarData = null;
+                try {
+                    avatarData = new FileInputStream(new File(imgAvatar.getUrl())).readAllBytes();
+                } catch (IOException ignore) {}
+
+                String username = txtLogin.getText().strip();
+                String playername = txtPlayerName.getText().strip();
+                String passwordHash = apiPasswordEncoder.sha256(txtPassword.getText().strip());
+
+                RegisterRequestDto requestDto = new RegisterRequestDto(username, playername, passwordHash, avatarData);
+                showConfirmation(primaryStage, requestDto);
             }
             else {
                 lblMessageText.setText("Wrong passwords! Try again.");
@@ -248,8 +286,7 @@ public class RegisterWindow extends Parent {
 
         gp.add(lblHeader, 1, 0);
         gp.add(lblMessageImg, 1, 1);
-//        gp.add(imgAvatarRoot, 1, 2);
-        gp.add(imgAvatarRoot, 1, 2);
+        gp.add(vbAvatar, 1, 2);
 
         gp.add(lblMessageText, 1, 3);
         gp.add(lblLogin, 0, 4);
