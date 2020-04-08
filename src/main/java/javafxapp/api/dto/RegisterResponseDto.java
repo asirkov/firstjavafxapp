@@ -7,8 +7,9 @@ import lombok.*;
 @Setter
 @ToString
 @NoArgsConstructor
-@AllArgsConstructor
 @JsonIgnoreProperties(ignoreUnknown = true)
-public class RegisterResponseDto extends BaseResponseDto {
+public class RegisterResponseDto {
     private boolean registered;
+    private String token;
+    private String message;
 }

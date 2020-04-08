@@ -1,12 +1,10 @@
 package javafxapp.api.dao;
 
-import javafxapp.api.dto.LoginRequestDto;
-import javafxapp.api.dto.LoginResponseDto;
+import javafxapp.api.dto.AuthRequestDto;
+import javafxapp.api.dto.AuthResponseDto;
 import javafxapp.api.security.ApiPasswordEncoder;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
-
-import static org.junit.jupiter.api.Assertions.*;
 
 class AuthDataApiDaoTest {
     private final AuthDataApiDao authDataApiDao = new AuthDataApiDao();
@@ -14,11 +12,20 @@ class AuthDataApiDaoTest {
 
     @Test
     public void loginTest() {
-        LoginRequestDto loginRequestDto = new LoginRequestDto("admin", apiPasswordEncoder.sha256("admin"));
+        AuthRequestDto authRequestDto = new AuthRequestDto("admin", apiPasswordEncoder.sha256("admin"));
 
-        LoginResponseDto loginResponseDto = authDataApiDao.login(loginRequestDto);
+        AuthResponseDto authResponseDto = authDataApiDao.login(authRequestDto);
 
-        Assertions.assertTrue(loginResponseDto.isAuthorized());
+        Assertions.assertTrue(authResponseDto.getAuthorized());
     }
 
+    @Test
+    public void login() {
+
+
+    }
+
+    @Test
+    public void register() {
+    }
 }

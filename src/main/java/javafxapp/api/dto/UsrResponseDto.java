@@ -3,15 +3,14 @@ package javafxapp.api.dto;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.*;
 
-import java.util.List;
-
-@Getter
-@Setter
+@Data
+@Builder
 @ToString
 @NoArgsConstructor
 @AllArgsConstructor
 @JsonIgnoreProperties(ignoreUnknown = true)
-public class UsrResponseDto extends BaseResponseDto {
-    private long totalCount;
-    private List<UsrDto> users;
+public class UsrResponseDto {
+    private String token;
+    private String message;
+    private UsrDto user;
 }

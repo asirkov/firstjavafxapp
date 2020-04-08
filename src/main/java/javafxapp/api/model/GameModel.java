@@ -2,6 +2,7 @@ package javafxapp.api.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import javafxapp.api.dto.UsrDto;
 import lombok.Data;
 
 import java.util.Date;
@@ -17,12 +18,12 @@ public class GameModel {
 
     // WHITE
     @JsonProperty("participant_1_id")
-    private final PlayerModel participant1;
+    private final UsrDto participant1;
 //    private final Long participant1Id;
 
     // BLACK
     @JsonProperty("participant_2_id")
-    private final PlayerModel participant2;
+    private final UsrDto participant2;
     //private final Long participant2Id;
 
 

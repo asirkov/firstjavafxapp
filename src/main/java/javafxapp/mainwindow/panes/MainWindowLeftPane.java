@@ -4,6 +4,8 @@ import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 import javafx.scene.layout.*;
+import javafxapp.api.dao.UsrDataApiDao;
+import javafxapp.api.dto.UsrDto;
 import javafxapp.api.model.PlayerModel;
 import javafxapp.mainwindow.config.MainWindowConfig;
 import javafxapp.util.ActionButton;
@@ -13,12 +15,13 @@ import javafxapp.mainwindow.views.PlayerMaxInfoView;
 import javafxapp.util.labels.*;
 
 public class MainWindowLeftPane extends VBox {
+    private final UsrDataApiDao usrDataApiDao = new UsrDataApiDao();
+    private final UsrDto currentUsr;
 
-//    private VBox createContent() {
-//    }
-
-    public MainWindowLeftPane(PlayerModel player, double width) {
+    public MainWindowLeftPane(UsrDto newCurrentUsr, double width) {
         super();
+        this.currentUsr = newCurrentUsr;
+
         this.setPadding(new Insets(0, 10, 20, 10));
         this.setAlignment(Pos.TOP_CENTER);
         this.setSpacing(0);
@@ -32,7 +35,7 @@ public class MainWindowLeftPane extends VBox {
         this.getChildren().addAll(
                 new HeaderLabel("Profile: ", width),
                 new VSeparator(width - 2 * HSeparator.SEPARATOR_WIDTH),
-                new PlayerMaxInfoView(player,  playerMaxInfoWidth),
+                new PlayerMaxInfoView(currentUsr,  playerMaxInfoWidth),
                 new VSeparator(width - 2 * HSeparator.SEPARATOR_WIDTH),
                 btnNewGame);
 

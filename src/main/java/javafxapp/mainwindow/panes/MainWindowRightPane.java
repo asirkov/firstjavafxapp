@@ -6,6 +6,8 @@ import javafx.scene.control.*;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
+import javafxapp.api.dao.UsrDataApiDao;
+import javafxapp.api.dto.UsrDto;
 import javafxapp.api.model.PlayerModel;
 import javafxapp.mainwindow.config.MainWindowConfig;
 import javafxapp.util.separators.VSeparator;
@@ -14,34 +16,15 @@ import javafxapp.mainwindow.views.PlayerMinInfoView;
 import java.util.List;
 
 public class MainWindowRightPane extends VBox {
-
-    private List<PlayerModel> onlineList = List.of(
-            new PlayerModel(13L, 13L, "Stepa", 1229L, 0.68d, true),
-            new PlayerModel(14L, 14L, "Petro", 929L, 0.4d, true),
-            new PlayerModel(15L, 15L, "Kesha", 297L, 0.56d, true),
-            new PlayerModel(16L, 16L, "Serega", 129L, 0.64d, true),
-            new PlayerModel(17L, 17L, "Kolia", 1229L, 0.68d, true),
-            new PlayerModel(18L, 18L, "Misha", 99L, 0.41d, true),
-            new PlayerModel(19L, 19L, "Andrey", 267L, 0.16d, true),
-            new PlayerModel(20L, 20L, "Zina", 109L, 0.34d, true),
-            new PlayerModel(21L, 13L, "Alina", 1229L, 0.68d, true),
-            new PlayerModel(22L, 14L, "Olena", 929L, 0.4d, true),
-            new PlayerModel(23L, 15L, "Nikita", 297L, 0.56d, true),
-            new PlayerModel(24L, 16L, "Liosha", 129L, 0.64d, true),
-            new PlayerModel(25L, 17L, "Aleksei", 1229L, 0.68d, true),
-            new PlayerModel(26L, 18L, "Lionia", 99L, 0.41d, true),
-            new PlayerModel(27L, 19L, "Semen", 267L, 0.16d, true),
-            new PlayerModel(28L, 20L, "Inokentii", 109L, 0.34d, true)
-            );
-
-    private List<PlayerModel> friendsList = List.of(
-            new PlayerModel(16L, 16L, "Serega", 129L, 0.64d, true),
-            new PlayerModel(29L, 29L, "Nikolay", 129L, 0.64d, false),
-            new PlayerModel(30L, 30L, "Sergii", 129L, 0.64d, false)
-            );
+    private final UsrDataApiDao usrDataApiDao = new UsrDataApiDao();
+    private UsrDto currentUsr;
 
 
-    private ScrollPane createPlayersList(Stage primaryStage, List<PlayerModel> playersList, double width, double height) {
+    private List<UsrDto> onlineList = List.of();
+
+    private List<PlayerModel> friendsList = List.of();
+
+    private ScrollPane createPlayersList(Stage primaryStage, List<UsrDto> usrsList, double width, double height) {
         VBox vb = new VBox();
         vb.setPadding(new Insets(0));
         vb.setSpacing(5);
@@ -50,8 +33,9 @@ public class MainWindowRightPane extends VBox {
         sp.setPadding(new Insets(0));
         sp.setContent(vb);
 
-        playersList.forEach(player -> {
-            PlayerMinInfoView view = new PlayerMinInfoView(primaryStage, player, width);
+        usrsList.forEach(usr -> {
+            byte[] usrAvatarData = usrDataApiDao.getUsrAvatarById(usr.getId(), "");
+            PlayerMinInfoView view = new PlayerMinInfoView(primaryStage, usr, usrAvatarData, width);
             view.setBorder(new Border(new BorderStroke(Color.GRAY, Color.GRAY, Color.GRAY, Color.GRAY,
                     BorderStrokeStyle.SOLID, BorderStrokeStyle.NONE, BorderStrokeStyle.SOLID, BorderStrokeStyle.NONE,
                     CornerRadii.EMPTY, new BorderWidths(1), Insets.EMPTY)));
@@ -70,8 +54,12 @@ public class MainWindowRightPane extends VBox {
         return sp;
     }
 
-    public MainWindowRightPane(Stage primaryStage, PlayerModel player, List<PlayerModel> playersList, double width, double height) {
+    public MainWindowRightPane(Stage primaryStage, UsrDto currentUsr, List<PlayerModel> playersList, double width, double height) {
         super();
+        this.currentUsr = currentUsr;
+        // TODO: add token
+        this.onlineList = usrDataApiDao.getAllOnlineUsrs("").getUsers();
+
         this.setPadding(new Insets(0));
         this.setAlignment(Pos.TOP_CENTER);
         this.setSpacing(0);
@@ -94,7 +82,7 @@ public class MainWindowRightPane extends VBox {
         VBox.setVgrow(spOnline, Priority.ALWAYS);
         tabOnline.setContent(spOnline);
 
-        ScrollPane spFriends = createPlayersList(primaryStage, friendsList, width,
+        ScrollPane spFriends = createPlayersList(primaryStage, List.of(), width,
                 (height - MainWindowConfig.HEADER_HEIGHT * 2) - VSeparator.SEPARATOR_HEIGHT - tabPane.getTabMinHeight());
         spFriends.setPadding(new Insets(VSeparator.SEPARATOR_HEIGHT,0,0,0));
         VBox.setVgrow(spFriends, Priority.ALWAYS);

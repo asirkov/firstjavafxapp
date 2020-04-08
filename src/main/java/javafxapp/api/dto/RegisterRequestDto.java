@@ -9,9 +9,9 @@ import lombok.*;
 @NoArgsConstructor
 @AllArgsConstructor
 @JsonIgnoreProperties(ignoreUnknown = true)
-public class RegisterRequestDto extends BaseResponseDto {
-    private String username;
-    private String playername;
+public class RegisterRequestDto {
+    private String userName;
+    private String playerName;
     private String passwordHash;
     private byte[] avatarData;
 }

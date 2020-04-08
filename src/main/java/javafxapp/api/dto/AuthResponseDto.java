@@ -7,9 +7,10 @@ import lombok.*;
 @Setter
 @ToString
 @NoArgsConstructor
-@AllArgsConstructor
 @JsonIgnoreProperties(ignoreUnknown = true)
-public abstract class BaseResponseDto {
+public class AuthResponseDto {
     private String token;
     private String message;
+    private Long id;
+    private Boolean authorized;
 }

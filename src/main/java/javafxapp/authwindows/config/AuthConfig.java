@@ -8,6 +8,7 @@ public class AuthConfig {
     public static final double BUTTON_HEIGHT = 40d;
 
     public static final double BIG_IMAGE_WIDTH = 150d;
+    public static final String DEFAULT_AVATAR_NAME = "empty_avatar.png";
     public static final String DEFAULT_AVATAR_PATH = "file:///D:\\Projects\\firstjavafxapp\\src\\resources\\images\\empty_avatar.png";
 
 

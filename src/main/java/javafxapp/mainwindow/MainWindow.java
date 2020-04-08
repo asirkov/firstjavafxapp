@@ -8,6 +8,9 @@ import javafx.scene.input.KeyCombination;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
+import javafxapp.api.dao.UsrDataApiDao;
+import javafxapp.api.dto.AuthResponseDto;
+import javafxapp.api.dto.UsrDto;
 import javafxapp.api.model.GameModel;
 import javafxapp.api.model.GameResultType;
 import javafxapp.api.model.PlayerModel;
@@ -25,6 +28,12 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 
 public class MainWindow extends Parent {
+    private final UsrDataApiDao usrDataApiDao;
+    private final UsrDto currentUsr;
+
+    private List<UsrDto> onlineList1;
+
+
     PlayerModel player = new PlayerModel(1L, 1L, "Developer", 9999L, 0.99d, true);
 
 
@@ -36,43 +45,9 @@ public class MainWindow extends Parent {
     PlayerModel participant6 = new PlayerModel(6L, 6L, "Ira", 2210L, 0.54d, false);
 
 
-    List<GameModel> gameModelList = List.of(
-            new GameModel(1L, Date.from(Instant.now()), player, participant2, GameResultType.BLACK_WINS),
-            new GameModel(2L, Date.from(Instant.now()), participant3, player, GameResultType.WHITE_WINS),
-            new GameModel(3L, Date.from(Instant.now()), participant5, player, GameResultType.DRAW),
-            new GameModel(4L, Date.from(Instant.now()), participant1, player, GameResultType.BLACK_WINS),
-            new GameModel(5L, Date.from(Instant.now()), player, participant4, GameResultType.DRAW),
-            new GameModel(6L, Date.from(Instant.now()), participant5, player, GameResultType.WHITE_WINS),
-            new GameModel(7L, Date.from(Instant.now()), participant1, player, GameResultType.WHITE_WINS),
-            new GameModel(8L, Date.from(Instant.now()), participant3, player, GameResultType.WHITE_WINS),
-            new GameModel(9L, Date.from(Instant.now()), player, participant6, GameResultType.BLACK_WINS),
-            new GameModel(10L, Date.from(Instant.now()), player, participant2, GameResultType.DRAW),
-            new GameModel(11L, Date.from(Instant.now()), player, participant4, GameResultType.WHITE_WINS),
-            new GameModel(12L, Date.from(Instant.now()), player, participant4, GameResultType.WHITE_WINS),
-            new GameModel(13L, Date.from(Instant.now()), player, participant2, GameResultType.DRAW),
-            new GameModel(14L, Date.from(Instant.now()), player, participant6, GameResultType.BLACK_WINS),
-            new GameModel(15L, Date.from(Instant.now()), participant5, player, GameResultType.BLACK_WINS),
-            new GameModel(16L, Date.from(Instant.now()), participant1, player, GameResultType.BLACK_WINS),
-            new GameModel(17L, Date.from(Instant.now()), player, participant4, GameResultType.DRAW),
-            new GameModel(18L, Date.from(Instant.now()), participant5, player, GameResultType.WHITE_WINS),
-            new GameModel(19L, Date.from(Instant.now()), participant1, player, GameResultType.WHITE_WINS),
-            new GameModel(20L, Date.from(Instant.now()), participant3, player, GameResultType.WHITE_WINS),
-            new GameModel(21L, Date.from(Instant.now()), player, participant6, GameResultType.BLACK_WINS),
-            new GameModel(22L, Date.from(Instant.now()), player, participant2, GameResultType.DRAW),
-            new GameModel(23L, Date.from(Instant.now()), player, participant4, GameResultType.WHITE_WINS),
-            new GameModel(24L, Date.from(Instant.now()), player, participant6, GameResultType.WHITE_WINS)
-    );
+    List<GameModel> gameModelList = List.of();
 
-    List<PlayerModel> onlineList = List.of(
-            participant1,
-            participant2,
-            participant3,
-            participant4,
-            participant5,
-            participant6
-    )
-            .stream()
-            .filter(PlayerModel::getOnline).collect(Collectors.toList());
+    List<PlayerModel> onlineList = List.of();
 
 
     //###################################################################################3
@@ -160,9 +135,9 @@ public class MainWindow extends Parent {
         double rightPaneWidth = width * MainWindowConfig.RIGHT_PANE_WIDTH - 30;
 
 
-        MainWindowLeftPane leftPane = new MainWindowLeftPane(player, leftPaneWidth);
+        MainWindowLeftPane leftPane = new MainWindowLeftPane(currentUsr, leftPaneWidth);
         MainWindowCenterPane centerPane = new MainWindowCenterPane(primaryStage, player, gameModelList, centerPaneWidth, paneHeight);
-        MainWindowRightPane rightPane = new MainWindowRightPane(primaryStage, player, onlineList, rightPaneWidth, paneHeight);
+        MainWindowRightPane rightPane = new MainWindowRightPane(primaryStage, currentUsr, onlineList, rightPaneWidth, paneHeight);
 
         bp.setCenter(centerPane);
         bp.setLeft(leftPane);
@@ -174,8 +149,13 @@ public class MainWindow extends Parent {
         return bp;
     }
 
-    public MainWindow(Stage primaryStage, PlayerModel player) {
+    public MainWindow(Stage primaryStage, AuthResponseDto authResponseDto) {
         super();
+        usrDataApiDao = new UsrDataApiDao();
+
+        // TODO: handle token
+        currentUsr = usrDataApiDao.getUsrById(authResponseDto.getId(), authResponseDto.getToken()).getUser();
+
         this.getChildren().add(createMainWindowPanes(primaryStage, Config.WINDOW_WIDTH, Config.WINDOW_HEIGHT));
     }
 }

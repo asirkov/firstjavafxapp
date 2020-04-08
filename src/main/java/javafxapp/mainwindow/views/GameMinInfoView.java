@@ -26,10 +26,10 @@ public class GameMinInfoView extends HBox {
         this.setPadding(new Insets(5));
         this.setAlignment(Pos.CENTER);
 
-        PlayerMinInfoView whitePlayerMinView = new PlayerMinInfoView(primaryStage, gameModel.getParticipant1(), width * 0.7d - HSeparator.SEPARATOR_WIDTH - PlayerOnlineIcon.ICON_RADIUS * 2 - 20);
+        PlayerMinInfoView whitePlayerMinView = new PlayerMinInfoView(primaryStage, gameModel.getParticipant1(), null,width * 0.7d - HSeparator.SEPARATOR_WIDTH - PlayerOnlineIcon.ICON_RADIUS * 2 - 20);
         whitePlayerMinView.setOnMouseClicked(e -> {});
 
-        PlayerMinInfoView blackPlayerMinView = new PlayerMinInfoView(primaryStage, gameModel.getParticipant2(), width * 0.7d - HSeparator.SEPARATOR_WIDTH - PlayerOnlineIcon.ICON_RADIUS * 2 - 20);
+        PlayerMinInfoView blackPlayerMinView = new PlayerMinInfoView(primaryStage, gameModel.getParticipant2(), null,width * 0.7d - HSeparator.SEPARATOR_WIDTH - PlayerOnlineIcon.ICON_RADIUS * 2 - 20);
         blackPlayerMinView.setOnMouseClicked(e -> {});
 
         VBox leftVb = new VBox(whitePlayerMinView, blackPlayerMinView);

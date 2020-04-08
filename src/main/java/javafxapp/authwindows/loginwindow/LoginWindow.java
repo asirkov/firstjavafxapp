@@ -10,8 +10,8 @@ import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import javafxapp.api.dao.AuthDataApiDao;
-import javafxapp.api.dto.LoginRequestDto;
-import javafxapp.api.dto.LoginResponseDto;
+import javafxapp.api.dto.AuthRequestDto;
+import javafxapp.api.dto.AuthResponseDto;
 import javafxapp.api.security.ApiPasswordEncoder;
 import javafxapp.authwindows.config.AuthConfig;
 import javafxapp.authwindows.registerwindow.RegisterWindow;
@@ -24,7 +24,11 @@ import javafxapp.authwindows.util.textfields.RegularPasswordField;
 import javafxapp.authwindows.util.textfields.RegularTextField;
 import javafxapp.config.Config;
 import javafxapp.mainwindow.MainWindow;
+import lombok.extern.slf4j.Slf4j;
 
+import java.io.FileNotFoundException;
+
+@Slf4j
 public class LoginWindow extends Parent {
     private final AuthDataApiDao authDataApiDao = new AuthDataApiDao();
     private final ApiPasswordEncoder apiPasswordEncoder = new ApiPasswordEncoder();
@@ -37,17 +41,23 @@ public class LoginWindow extends Parent {
     }
 
     private void loadRegisterWindow(Stage primaryStage) {
-        Scene registerWindowScene = new Scene(new RegisterWindow(primaryStage));
 
-        primaryStage.setTitle("Register");
-        primaryStage.setScene(registerWindowScene);
-        primaryStage.setResizable(false);
+        try {
+            final RegisterWindow registerWindow = new RegisterWindow(primaryStage);
+            Scene registerWindowScene = new Scene(registerWindow);
 
-        primaryStage.show();
+            primaryStage.setTitle("Register");
+            primaryStage.setScene(registerWindowScene);
+            primaryStage.setResizable(false);
+
+            primaryStage.show();
+        } catch (FileNotFoundException ex) {
+            log.error("Can`t load register window, can`t get default avatar", ex);
+        }
     }
 
-    private void loadMainWindow(Stage primaryStage) {
-        Scene registerWindowScene = new Scene(new MainWindow(primaryStage, null));
+    private void loadMainWindow(Stage primaryStage, AuthResponseDto authResponseDto) {
+        Scene registerWindowScene = new Scene(new MainWindow(primaryStage, authResponseDto));
 
         primaryStage.setTitle("MainWindow");
         primaryStage.setScene(registerWindowScene);
@@ -114,14 +124,16 @@ public class LoginWindow extends Parent {
             String checkUser = txtLogin.getText().strip();
             String checkPw = txtPassword.getText().strip();
 
-            LoginResponseDto loginResponseDto = authDataApiDao.login(
-                    new LoginRequestDto(checkUser, apiPasswordEncoder.sha256(checkPw)));
+            AuthRequestDto authRequestDto = new AuthRequestDto(checkUser, apiPasswordEncoder.sha256(checkPw));
+            System.out.println(String.format("IN loginWindow - try to auth with request %s", authRequestDto));
 
-            if (loginResponseDto.isAuthorized()) {
-                loadMainWindow(primaryStage);
+            AuthResponseDto authResponseDto = authDataApiDao.login(authRequestDto);
+
+            if (authResponseDto.getAuthorized()) {
+                loadMainWindow(primaryStage, authResponseDto);
 
             } else {
-                lblMessage.setText("Incorrect login or password!");
+                lblMessage.setText(authResponseDto.getMessage());
                 lblMessage.setTextFill(Color.RED);
 
                 lightTextBoxes(Color.RED, txtLogin, txtPassword, txtPasswordVisible);

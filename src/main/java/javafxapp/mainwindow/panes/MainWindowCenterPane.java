@@ -18,7 +18,7 @@ import java.util.List;
 
 public class MainWindowCenterPane extends HBox {
 
-    private ScrollPane createMainWindowGameList(Stage primaryStage, PlayerModel player, List<GameModel> gamesList, double width, double height) {
+    private ScrollPane createMainWindowGameList(Stage primaryStage, PlayerModel player, List<GameModel> gamesList, double width) {
         VBox vb = new VBox();
         vb.setPadding(new Insets(0));
         vb.setSpacing(5);
@@ -64,7 +64,7 @@ public class MainWindowCenterPane extends HBox {
         vb.getChildren().addAll(
                 new HeaderLabel("Games: ", width),
                 new VSeparator(width),
-                createMainWindowGameList(primaryStage, player, gamesList, width, height - MainWindowConfig.HEADER_HEIGHT - VSeparator.SEPARATOR_HEIGHT));
+                createMainWindowGameList(primaryStage, player, gamesList, width));
 
         vb.getChildren().forEach(c -> VBox.setVgrow(c, Priority.ALWAYS));
 

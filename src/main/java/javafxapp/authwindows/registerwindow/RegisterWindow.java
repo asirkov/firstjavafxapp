@@ -28,15 +28,22 @@ import javafxapp.authwindows.util.textfields.RegularPasswordField;
 import javafxapp.authwindows.util.textfields.RegularTextField;
 import javafxapp.config.Config;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.IOException;
+import java.io.*;
 import java.util.Optional;
+import java.util.concurrent.atomic.AtomicReference;
+
+import static java.util.Objects.requireNonNull;
 
 public class RegisterWindow extends Parent {
     private final AuthDataApiDao authDataApiDao = new AuthDataApiDao();
     private final ApiPasswordEncoder apiPasswordEncoder = new ApiPasswordEncoder();
+
+    private final String defaultAvatarUrl = "file://" +
+            requireNonNull(this.getClass().getClassLoader().getResource("images")).getPath() +
+            "/" + AuthConfig.DEFAULT_AVATAR_NAME;
+
+    private final String defaultAvatarPath = requireNonNull(this.getClass().getClassLoader().getResource("images")).getPath() +
+            "/" + AuthConfig.DEFAULT_AVATAR_NAME;
 
 
     private void lightTextBoxes(Color color, TextField... textFields) {
@@ -62,7 +69,7 @@ public class RegisterWindow extends Parent {
         if (registerResponseDto.isRegistered()) {
             Alert alert = new Alert(Alert.AlertType.INFORMATION);
             alert.setTitle("Success");
-            alert.setHeaderText("Registration was successful\n\nLog in to your account, please.");
+            alert.setHeaderText(String.format("%s\n\nLog in to your account, please.", registerResponseDto.getMessage()));
             alert.setResizable(false);
 
             alert.setOnCloseRequest(e -> loadLoginWindow(primaryStage));
@@ -78,7 +85,7 @@ public class RegisterWindow extends Parent {
 //            alert.setOnCloseRequest(e -> loadLoginWindow(primaryStage));
 
             Optional<ButtonType> option = alert.showAndWait();
-            option.ifPresent(op ->alert.close());
+            option.ifPresent(op -> alert.close());
 
         }
 
@@ -101,7 +108,7 @@ public class RegisterWindow extends Parent {
         });
     }
 
-    private Image loadImage(Image oldImage, Stage primaryStage) throws IllegalArgumentException {
+    private File loadImage(File oldImageFile, Stage primaryStage) throws IllegalArgumentException, FileNotFoundException {
         FileChooser fileChooser = new FileChooser();
         fileChooser.setTitle("Open an avatar image.");
 
@@ -114,15 +121,15 @@ public class RegisterWindow extends Parent {
                 new FileChooser.ExtensionFilter("PNG", "*.png")
         );
 
-        File f = fileChooser.showOpenDialog(primaryStage);
-        if (f != null) {
-            return new Image(f.toURI().toString());
+        File newImageFile = fileChooser.showOpenDialog(primaryStage);
+        if (newImageFile != null) {
+            return newImageFile;
         } else {
-            return oldImage;
+            return oldImageFile;
         }
     }
 
-    private GridPane createRegisterWindowPane(Stage primaryStage, double width, double height) {
+    private GridPane createRegisterWindowPane(Stage primaryStage, double width, double height) throws IOException {
         GridPane gp = new GridPane();
 
         gp.setMinSize(width, height);
@@ -143,8 +150,14 @@ public class RegisterWindow extends Parent {
         lblMessageImg.setMinWidth(AuthConfig.BIG_LABEL_WIDTH);
         lblMessageImg.setAlignment(Pos.CENTER);
 
+
+        // Url for load default avatar image
+        System.out.println("default avatar path: " + defaultAvatarPath);
+
         // Avatar image
-        final Image imgAvatar = new Image(AuthConfig.DEFAULT_AVATAR_PATH, true);
+        AtomicReference<File> currentAvatarFile = new AtomicReference<>(new File(defaultAvatarPath));
+        final Image imgAvatar = new Image(new FileInputStream(currentAvatarFile.get()));
+
 
         // View for avatar image
         final ImageView imgAvatarRoot = new ImageView();
@@ -157,12 +170,17 @@ public class RegisterWindow extends Parent {
 
         imgAvatarRoot.setOnMouseClicked(mouseEvent -> {
             try {
-                Image imgLoaded = loadImage(imgAvatarRoot.getImage(), primaryStage);
-                imgAvatarRoot.setImage(imgLoaded);
+                File newAvatarFile = loadImage(currentAvatarFile.get(), primaryStage);
+
+                imgAvatarRoot.setImage(new Image(new FileInputStream(newAvatarFile)));
+                currentAvatarFile.set(newAvatarFile);
+
                 lblMessageImg.setText("Image successfully loaded.");
                 lblMessageImg.setTextFill(Color.GREEN);
-            } catch (IllegalArgumentException ex) {
-                imgAvatarRoot.setImage(new Image(AuthConfig.DEFAULT_AVATAR_PATH, true));
+            } catch (IllegalArgumentException | FileNotFoundException ex) {
+                try {
+                    imgAvatarRoot.setImage(new Image(new FileInputStream(new File(defaultAvatarPath))));
+                } catch (FileNotFoundException ignore) {}
                 lblMessageImg.setText("Can`t load image.");
                 lblMessageImg.setTextFill(Color.RED);
             }
@@ -232,22 +250,18 @@ public class RegisterWindow extends Parent {
                     && password.length() > AuthConfig.MIN_PASSWORD_SIZE
                     && password.length() < AuthConfig.MAX_PASSWORD_SIZE){
 
-//                lblMessageText.setText("Successfully register!");
-//                lblMessageText.setTextFill(Color.GREEN);
                 lightTextBoxes(Color.TRANSPARENT, txtPassword, txtPasswordVisible, txtRptPassword, txtRptPasswordVisible);
-
-//                loadLoginWindow(primaryStage);
 
                 byte[] avatarData = null;
                 try {
-                    avatarData = new FileInputStream(new File(imgAvatar.getUrl())).readAllBytes();
+                    avatarData = new FileInputStream(currentAvatarFile.get()).readAllBytes();
                 } catch (IOException ignore) {}
 
-                String username = txtLogin.getText().strip();
-                String playername = txtPlayerName.getText().strip();
+                String userName = txtLogin.getText().strip();
+                String playerName = txtPlayerName.getText().strip();
                 String passwordHash = apiPasswordEncoder.sha256(txtPassword.getText().strip());
 
-                RegisterRequestDto requestDto = new RegisterRequestDto(username, playername, passwordHash, avatarData);
+                RegisterRequestDto requestDto = new RegisterRequestDto(userName, playerName, passwordHash, avatarData);
                 showConfirmation(primaryStage, requestDto);
             }
             else {
@@ -314,8 +328,12 @@ public class RegisterWindow extends Parent {
         return gp;
     }
 
-    public RegisterWindow(Stage primaryStage) {
+    public RegisterWindow(Stage primaryStage) throws FileNotFoundException {
         super();
-        this.getChildren().add(createRegisterWindowPane(primaryStage, Config.WINDOW_WIDTH, Config.WINDOW_HEIGHT));
+        try {
+            this.getChildren().add(createRegisterWindowPane(primaryStage, Config.WINDOW_WIDTH, Config.WINDOW_HEIGHT));
+        } catch (IOException e) {
+            System.out.println(String.format("Can`t create register window, %s", e));
+        }
     }
 }
