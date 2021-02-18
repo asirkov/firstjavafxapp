@@ -16,7 +16,7 @@
         <slf4j-api.version>1.7.28</slf4j-api.version>
         <javafx-graphics.version>13.0.1</javafx-graphics.version>
         <lombok.version>1.18.10</lombok.version>
-        <jackson-annotations.version>2.10.1</jackson-annotations.version>
+        <jackson-annotations.version>2.12.1</jackson-annotations.version>
         <snakeyaml.version>1.21</snakeyaml.version>
     </properties>
 
